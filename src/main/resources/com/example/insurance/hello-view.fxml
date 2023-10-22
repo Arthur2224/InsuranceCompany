@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="1080.0" maxWidth="2560.0" minHeight="600.0" minWidth="800.0" prefHeight="657.0" prefWidth="1038.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane maxHeight="1080.0" maxWidth="0.0" prefHeight="66.0" style="-fx-background-color: #dc143c;">
+         <children>
+            <HBox prefHeight="57.0" prefWidth="1038.0" style="-fx-background-color: #b0c4de;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1038.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label prefHeight="47.0" prefWidth="450.0" text="UNIONINSURANCE" textFill="#3e2a5b">
+                     <HBox.margin>
+                        <Insets left="25.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="OCR A Extended" size="44.0" />
+                     </font>
+                  </Label>
+               </children></HBox>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="583.0" prefWidth="1038.0" style="-fx-background-color: #F5FFFA;">
+         <children>
+            <HBox alignment="CENTER" prefHeight="334.0" prefWidth="637.0" style="-fx-background-color: #800000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <children>
+                  <VBox alignment="BASELINE_LEFT" prefHeight="540.0" prefWidth="140.0" style="-fx-background-color: #00ffff;" HBox.hgrow="ALWAYS" />
+                  <VBox prefHeight="590.0" prefWidth="695.0" style="-fx-background-color: #8a2be2;" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="TOP_RIGHT" prefHeight="540.0" prefWidth="149.0" style="-fx-background-color: #deb887;" HBox.hgrow="ALWAYS" />
+               </children></HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane maxHeight="59.0" minHeight="20.0" prefHeight="55.0" prefWidth="1038.0" VBox.vgrow="NEVER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="441.0" maxHeight="30.0" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="0.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="-1.0" />
+         </VBox.margin>
+      </AnchorPane>
+   </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+
+</VBox>
