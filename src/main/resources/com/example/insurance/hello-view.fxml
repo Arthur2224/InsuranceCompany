@@ -22,15 +22,15 @@
                   </Label>
                </children></HBox>
          </children></AnchorPane>
-      <AnchorPane prefHeight="583.0" prefWidth="1038.0" style="-fx-background-color: #F5FFFA;">
+      <AnchorPane prefHeight="583.0" prefWidth="1038.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="334.0" prefWidth="637.0" style="-fx-background-color: #800000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER" layoutY="32.0" prefHeight="526.0" prefWidth="1038.0" style="-fx-background-color: linear-gradient(to bottom right, #000080 50%, #6a5acd);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <children>
-                  <VBox alignment="BASELINE_LEFT" prefHeight="540.0" prefWidth="140.0" style="-fx-background-color: #00ffff;" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="590.0" prefWidth="695.0" style="-fx-background-color: #8a2be2;" HBox.hgrow="ALWAYS">
+                  <VBox alignment="BASELINE_LEFT" prefHeight="540.0" prefWidth="140.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+                  <VBox id="VboxWithBorder" fx:id="vboxWithBorder" prefHeight="504.0" prefWidth="713.0" style="-fx-border-color: #000080; -fx-background-color: linear-gradient(to bottom left,#00008050%,  #b0c4de 50% ); -fx-border-width: 5px;" styleClass="vboxWithBorder" HBox.hgrow="ALWAYS">
                      <children>
                         <GridPane prefHeight="370.0" prefWidth="693.0">
                           <columnConstraints>
@@ -50,7 +50,7 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="PhoneTextField" onInputMethodTextChanged="#CheckLenghtOfText" promptText="+375 ..." text="+375" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="PhoneTextField" promptText="+375 ..." text="+375" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
@@ -78,7 +78,7 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <DatePicker GridPane.rowIndex="1">
+                              <DatePicker promptText="Дата рождения" GridPane.rowIndex="1">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -86,23 +86,30 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <PasswordField promptText="Пароль" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </PasswordField>
-                              <PasswordField GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <PasswordField promptText="Еще раз пароль" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </PasswordField>
+                              <Button mnemonicParsing="false" text="Очистить" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="85.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Регистрация" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <CheckBox mnemonicParsing="false" text="Сотрудник" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                            </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="10.0" right="10.0" top="100.0" />
                            </VBox.margin>
                         </GridPane>
                      </children></VBox>
-                  <VBox alignment="TOP_RIGHT" prefHeight="540.0" prefWidth="149.0" style="-fx-background-color: #deb887;" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="TOP_RIGHT" prefHeight="540.0" prefWidth="149.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
                </children></HBox>
          </children>
       </AnchorPane>
