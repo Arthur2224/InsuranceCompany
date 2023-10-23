@@ -13,11 +13,13 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        VBox VBox=new VBox();
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setTitle("Hello!");
+        stage.setMinWidth(1280);
+        stage.setMinHeight(720);
+        stage.setTitle("UnionInsurance");
         stage.setScene(scene);
         stage.show();
 
