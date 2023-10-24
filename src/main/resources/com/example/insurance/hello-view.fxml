@@ -21,16 +21,18 @@
                         <Font name="OCR A Extended" size="44.0" />
                      </font>
                   </Label>
-
-
-                  <ImageView fitHeight="64.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Registration.png" />
-                     </image>
+                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchToSignUpScene" prefHeight="62.0" prefWidth="54.0" style="-fx-background-color: null;">
                      <HBox.margin>
-                        <Insets left="680.0" />
+                        <Insets left="700.0" />
                      </HBox.margin>
-                  </ImageView>
+                     <graphic>
+                        <ImageView fitHeight="54.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                           <image>
+                              <Image url="@Registration.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+
 
 
                </children></HBox>
@@ -184,7 +186,7 @@
                            </VBox.margin></ImageView>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@RegLog%20BackgroundAuto.png" />
+                              <Image url="@RegLogBackgroundAuto.png" />
                            </image></ImageView>
                      </children></VBox>
                </children></HBox>
