@@ -11,7 +11,7 @@
    <children>
       <AnchorPane maxHeight="1080.0" maxWidth="1.7976931348623157E308" prefHeight="66.0" style="-fx-background-color: white;">
          <children>
-            <HBox cacheShape="false" centerShape="false" fillHeight="false" style="-fx-background-color: #b0c4de;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox cacheShape="false" centerShape="false" fillHeight="false" prefHeight="66.0" prefWidth="1280.0" style="-fx-background-color: #b0c4de;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label prefHeight="47.0" prefWidth="450.0" text="UNIONINSURANCE" textFill="#3e2a5b">
                      <HBox.margin>

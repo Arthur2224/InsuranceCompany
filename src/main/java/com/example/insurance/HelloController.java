@@ -55,7 +55,7 @@ public class HelloController {
 
                 // Create the stage and set the new scene
                 Stage stage = (Stage) SignUp.getScene().getWindow();
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(root,1280,720);
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
