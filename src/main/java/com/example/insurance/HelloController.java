@@ -5,10 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class HelloController {
     @FXML
     public TextField PhoneTextField;
+    @FXML
+    Text coloredText = new Text();
     @FXML
     public VBox vboxWithBorder;
     @FXML
@@ -27,8 +30,11 @@ public class HelloController {
                     ((DatePicker) node).setValue(null);
                 }
             }
-        }
+        };
 
-        ;
 
-    }}
+
+    }
+
+
+    ;}

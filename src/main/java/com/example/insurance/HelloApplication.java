@@ -16,10 +16,10 @@ public class HelloApplication extends Application {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-
-        stage.setMinWidth(1280);
-        stage.setMinHeight(720);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setResizable(false);
+      /*  stage.setMinWidth(1280);
+        stage.setMinHeight(720);*/
         stage.setTitle("UnionInsurance");
         stage.setScene(scene);
         stage.show();

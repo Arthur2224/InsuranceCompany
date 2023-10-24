@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="1080.0" maxWidth="2560.0" minHeight="600.0" minWidth="800.0" prefHeight="657.0" prefWidth="1038.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.HelloController">
+<VBox maxHeight="1080.0" maxWidth="2560.0" minHeight="600.0" minWidth="800.0" prefHeight="657.0" prefWidth="1038.0" scaleShape="false" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.HelloController">
    <children>
       <AnchorPane maxHeight="1080.0" maxWidth="0.0" prefHeight="66.0" style="-fx-background-color: #dc143c;">
          <children>
@@ -24,13 +24,13 @@
          </children></AnchorPane>
       <AnchorPane prefHeight="583.0" prefWidth="1038.0">
          <children>
-            <HBox alignment="CENTER" layoutY="32.0" prefHeight="526.0" prefWidth="1038.0" style="-fx-background-color: linear-gradient(to bottom right, #000080 50%, #6a5acd);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+            <HBox alignment="CENTER" layoutY="32.0" prefHeight="526.0" prefWidth="1038.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <children>
                   <VBox alignment="BASELINE_LEFT" prefHeight="540.0" prefWidth="140.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
-                  <VBox id="VboxWithBorder" fx:id="vboxWithBorder" prefHeight="504.0" prefWidth="713.0" style="-fx-border-color: #000080; -fx-background-color: linear-gradient(to bottom left,#000080 50%,  #b0c4de 50% ); -fx-border-width: 5px;" styleClass="vboxWithBorder" HBox.hgrow="ALWAYS">
+                  <VBox id="VboxWithBorder" fx:id="vboxWithBorder" prefHeight="504.0" prefWidth="713.0" style="-fx-border-color: #301c94; -fx-background-color: linear-gradient(to bottom left,#301c94 53%,  #b0c4de 47% ); -fx-border-width: 5px;" styleClass="vboxWithBorder" HBox.hgrow="ALWAYS">
                      <children>
                         <GridPane fx:id="GridPanel" prefHeight="370.0" prefWidth="693.0">
                           <columnConstraints>
@@ -45,27 +45,32 @@
                               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="102.0" vgrow="ALWAYS" />
                           </rowConstraints>
                            <children>
-                              <TextField prefHeight="25.0" prefWidth="291.0" promptText="Фамилия" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                              <TextField prefHeight="25.0" prefWidth="291.0" promptText="Фамилия" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-background-color: NULL; -fx-text-fill: #b0c4de;" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                                 <GridPane.margin>
+                                    <Insets left="50.0" right="20.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <TextField fx:id="PhoneTextField" prefHeight="33.0" prefWidth="143.0" style="-fx-border-width: 4px; -fx-border-color: linear-gradient(to bottom left, #b0c4de 5%,   #301c94  95% ); -fx-background-color: null; -fx-text-fill: white;" text="+375" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="50.0" right="20.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: null;" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.rowSpan="3">
+                                 <GridPane.margin>
+                                    <Insets left="350.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField promptText="Имя" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: NULL;-fx-prompt-text-fill: black;">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="PhoneTextField" promptText="+375 ..." text="+375" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField promptText="Логин" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-prompt-text-fill: black; -fx-background-color: null;" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField promptText="имя">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField promptText="Логин" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField prefHeight="24.0" prefWidth="131.0" promptText="Отчество" GridPane.columnIndex="2">
+                              <TextField prefHeight="24.0" prefWidth="131.0" promptText="Отчество" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-background-color: NULL; -fx-text-fill: #b0c4de;" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
@@ -73,12 +78,12 @@
                                     <Insets />
                                  </opaqueInsets>
                               </TextField>
-                              <TextField promptText="email" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <TextField promptText="email" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-text-fill: #b0c4de; -fx-background-color: NULL;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <DatePicker fx:id="Calendar" promptText="Дата рождения" GridPane.rowIndex="1">
+                              <DatePicker fx:id="Calendar" promptText="Дата рождения" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-prompt-text-fill: black; -fx-control-inner-background: #b0c4de;" GridPane.rowIndex="1">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -86,23 +91,26 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <PasswordField promptText="Пароль" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <PasswordField promptText="Пароль" style="-fx-border-width: 4px; -fx-border-color: linear-gradient(to bottom left, #b0c4de 30%,   #301c94  70% );-fx-prompt-text-fill: black;-fx-background-color: NULL;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="50.0" right="20.0" />
+                                 </GridPane.margin>
+                              </PasswordField>
+                              <PasswordField promptText="Еще раз пароль" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-background-color: NULL; -fx-text-fill: #b0c4de;" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </PasswordField>
-                              <PasswordField promptText="Еще раз пароль" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </GridPane.margin>
-                              </PasswordField>
-                              <Button mnemonicParsing="false" onAction="#ClearTextFields" text="Очистить" GridPane.rowIndex="3">
+                              <Button mnemonicParsing="false" onAction="#ClearTextFields" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Очистить" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="85.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Регистрация" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <CheckBox mnemonicParsing="false" text="Сотрудник" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Регистрация" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-text-fill: #b0c4de;" text="Сотрудник" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="50.0" right="50.0" />
+                                 </GridPane.margin></CheckBox>
                            </children>
                            <VBox.margin>
                               <Insets left="10.0" right="10.0" top="100.0" />
