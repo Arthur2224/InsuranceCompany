@@ -10,14 +10,14 @@
    <children>
       <AnchorPane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #b0c4de;">
          <children>
-            <HBox prefHeight="65.0" prefWidth="827.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox prefHeight="74.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="UNIONINSURANCE" textFill="#3e2a5b">
                      <font>
                         <Font name="OCR A Extended" size="44.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </Label>
                   <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchSceneSignUp" prefHeight="66.0" prefWidth="148.0" style="-fx-background-color: null;">
@@ -34,6 +34,27 @@
                </children></HBox>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="436.0" prefWidth="827.0" />
+      <AnchorPane prefHeight="436.0" prefWidth="827.0">
+         <children>
+            <HBox prefHeight="641.0" prefWidth="1288.0">
+               <children>
+                  <VBox prefHeight="641.0" prefWidth="200.0" />
+                  <GridPane prefHeight="541.0" prefWidth="663.0" style="-fx-background-color: #b0c4de;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" prefWidth="431.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.0" minWidth="10.0" prefWidth="468.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="134.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <HBox.margin>
+                        <Insets bottom="41.0" left="100.0" right="100.0" top="100.0" />
+                     </HBox.margin>
+                  </GridPane>
+                  <VBox prefHeight="641.0" prefWidth="200.0" />
+               </children></HBox>
+         </children></AnchorPane>
    </children>
 </VBox>

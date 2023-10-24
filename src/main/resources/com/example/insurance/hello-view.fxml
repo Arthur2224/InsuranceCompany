@@ -11,7 +11,7 @@
    <children>
       <AnchorPane maxHeight="1080.0" maxWidth="1.7976931348623157E308" prefHeight="66.0" style="-fx-background-color: white;">
          <children>
-            <HBox cacheShape="false" centerShape="false" fillHeight="false" prefHeight="66.0" prefWidth="1280.0" style="-fx-background-color: #b0c4de;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox cacheShape="false" centerShape="false" fillHeight="false" prefHeight="74.0" prefWidth="1280.0" style="-fx-background-color: #b0c4de;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label prefHeight="47.0" prefWidth="450.0" text="UNIONINSURANCE" textFill="#3e2a5b">
                      <HBox.margin>
@@ -21,12 +21,12 @@
                         <Font name="OCR A Extended" size="44.0" />
                      </font>
                   </Label>
-                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchToSignUpScene" prefHeight="62.0" prefWidth="54.0" style="-fx-background-color: null;">
+                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchToSignUpScene" prefHeight="76.0" prefWidth="79.0" style="-fx-background-color: null;">
                      <HBox.margin>
                         <Insets left="700.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="54.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                        <ImageView fitHeight="67.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                            <image>
                               <Image url="@Registration.png" />
                            </image>
@@ -37,14 +37,14 @@
 
                </children></HBox>
          </children></AnchorPane>
-      <AnchorPane prefHeight="583.0" prefWidth="1038.0">
+      <AnchorPane prefHeight="583.0" prefWidth="1038.0" style="-fx-background-color: white;">
          <children>
             <HBox alignment="CENTER" layoutY="32.0" prefHeight="526.0" prefWidth="1038.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <children>
-                  <VBox alignment="CENTER" prefHeight="540.0" prefWidth="140.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER" prefHeight="545.0" prefWidth="200.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -55,7 +55,7 @@
                               <Image url="@HouseInsurance.png" />
                            </image></ImageView>
                      </children></VBox>
-                  <VBox id="VboxWithBorder" fx:id="vboxWithBorder" prefHeight="504.0" prefWidth="713.0" style="-fx-border-color: #301c94; -fx-background-color: linear-gradient(to bottom left,#301c94 53%,  #b0c4de 47% ); -fx-border-width: 5px;" styleClass="vboxWithBorder" HBox.hgrow="ALWAYS">
+                  <VBox id="VboxWithBorder" fx:id="vboxWithBorder" prefHeight="551.0" prefWidth="845.0" style="-fx-border-color: #301c94; -fx-background-color: linear-gradient(to bottom left,#301c94 53%,  #b0c4de 47% ); -fx-border-width: 5px;" styleClass="vboxWithBorder" HBox.hgrow="ALWAYS">
                      <children>
                         <GridPane fx:id="GridPanel" prefHeight="370.0" prefWidth="693.0">
                           <columnConstraints>
@@ -99,14 +99,6 @@
                                     <Font size="14.0" />
                                  </font>
                               </TextField>
-                              <TextField promptText="Логин" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-prompt-text-fill: black; -fx-background-color: null;" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
                               <TextField prefHeight="24.0" prefWidth="131.0" promptText="Отчество" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-background-color: NULL; -fx-text-fill: #b0c4de;" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
@@ -134,7 +126,7 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <PasswordField promptText="Пароль" style="-fx-border-width: 4px; -fx-border-color: linear-gradient(to bottom left, #b0c4de 30%,   #301c94  70% );-fx-prompt-text-fill: black;-fx-background-color: NULL;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <PasswordField promptText="Еще рах пароль" style="-fx-border-width: 4px; -fx-border-color: linear-gradient(to bottom left, #b0c4de 30%,   #301c94  70% );-fx-prompt-text-fill: black;-fx-background-color: NULL;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="60.0" right="20.0" />
                                  </GridPane.margin>
@@ -142,7 +134,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </PasswordField>
-                              <PasswordField promptText="Еще раз пароль" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #b0c4de; -fx-background-color: NULL; -fx-text-fill: #b0c4de;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <PasswordField promptText="Пароль" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-prompt-text-fill: #301c94; -fx-background-color: NULL; -fx-text-fill: #301c94;" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
@@ -162,7 +154,7 @@
                                  <font>
                                     <Font size="14.0" />
                                  </font></Button>
-                              <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-text-fill: #b0c4de;" text="Сотрудник" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                              <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-text-fill: #b0c4de;" text="Сотрудник" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
