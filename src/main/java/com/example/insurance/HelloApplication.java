@@ -3,9 +3,7 @@ package com.example.insurance;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,8 +16,6 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setResizable(false);
-      /*  stage.setMinWidth(1280);
-        stage.setMinHeight(720);*/
         stage.setTitle("UnionInsurance");
         stage.setScene(scene);
         stage.show();
