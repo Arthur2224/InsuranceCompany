@@ -154,13 +154,19 @@
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <Label fx:id="thinkaboutcode" style="-fx-text-fill: #b0c4de;" text="Если вы сотрудник компании" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                              <Label fx:id="thinkaboutcode" disable="true" style="-fx-text-fill: #b0c4de; -fx-opacity: 0;" text="Если вы сотрудник компании" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                  <cursor>
                                     <Cursor fx:constant="NONE" />
                                  </cursor>
                                  <GridPane.margin>
                                     <Insets bottom="50.0" left="50.0" right="50.0" />
                                  </GridPane.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="62.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@ideaLamp.png" />
+                                       </image></ImageView>
+                                 </graphic>
                               </Label>
                            </children>
                            <VBox.margin>

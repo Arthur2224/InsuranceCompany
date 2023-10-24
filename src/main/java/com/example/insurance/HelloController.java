@@ -68,11 +68,11 @@ public class HelloController {
         }
         @FXML
         protected void UpTip(){
-        thinkaboutcode.setVisible(true);
+        thinkaboutcode.setOpacity(1);
         }
     @FXML
     protected void DownTip(){
-        thinkaboutcode.setVisible(false);
+        thinkaboutcode.setOpacity(0);
     }
 
 
