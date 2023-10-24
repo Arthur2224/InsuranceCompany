@@ -32,7 +32,8 @@ public class HelloController {
     @FXML
     public DatePicker Calendar;
 
-
+    @FXML
+    public Label thinkaboutcode;
 
     // The method to handle the InputMethodTextChanged event
     @FXML
@@ -65,7 +66,14 @@ public class HelloController {
             }
 
         }
-
+        @FXML
+        protected void UpTip(){
+        thinkaboutcode.setVisible(true);
+        }
+    @FXML
+    protected void DownTip(){
+        thinkaboutcode.setVisible(false);
+    }
 
 
 
