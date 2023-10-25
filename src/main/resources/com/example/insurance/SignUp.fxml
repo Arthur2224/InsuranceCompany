@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.SignUpController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.SignUpController">
    <children>
       <AnchorPane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #b0c4de;">
          <children>
-            <HBox prefHeight="74.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to top left #301c94 50% ,#b0c4de 50% );" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox prefHeight="74.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="UNIONINSURANCE" textFill="#3e2a5b">
                      <font>
@@ -42,7 +42,7 @@
                      <children>
                         <ImageView fitHeight="231.0" fitWidth="223.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@LoginIcons2.png" />
+                              <Image url="@LogInIcons2.png" />
                            </image>
                            <VBox.margin>
                               <Insets left="20.0" />
@@ -59,7 +59,7 @@
                            <graphic>
                               <ImageView fitHeight="75.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@BlueideaLamp.png" />
+                                    <Image url="@ideaLamp.png" />
                                  </image></ImageView>
                            </graphic>
                         </Label>
@@ -79,15 +79,15 @@
                         <Insets bottom="100.0" left="155.0" right="100.0" top="100.0" />
                      </HBox.margin>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="148.0" style="-fx-background-color: null; -fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% ); -fx-border-width: 4px;" text="Войти" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="TrySignUp" mnemonicParsing="false" onAction="#signUpUser" prefHeight="38.0" prefWidth="148.0" style="-fx-background-color: null; -fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% ); -fx-border-width: 4px;" text="Войти" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="70.0" left="160.0" />
                            </GridPane.margin></Button>
-                        <TextField prefHeight="40.0" prefWidth="203.0" promptText="Электронная почта" style="-fx-border-color: #b0c4de; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="emailTxtField" prefHeight="40.0" prefWidth="203.0" promptText="Электронная почта" style="-fx-border-color: #b0c4de; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="140.0" right="120.0" />
                            </GridPane.margin></TextField>
-                        <TextField prefHeight="40.0" prefWidth="203.0" promptText="Пароль" style="-fx-border-color: #b0c4de; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="passwordTxtField" prefHeight="40.0" prefWidth="203.0" promptText="Пароль" style="-fx-border-color: #b0c4de; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="140.0" right="120.0" />
                            </GridPane.margin></TextField>

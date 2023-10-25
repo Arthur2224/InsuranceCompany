@@ -1,25 +1,27 @@
 package com.example.insurance;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 
 public class SignUpController {
     @FXML
-    public Button SignUp;
+    private Button SignUp;
     @FXML
-    public Label thinkaboutInsurance;
+    public Button TrySignUp;
+    @FXML
+    private Label thinkaboutInsurance;
+    @FXML
+    private TextField emailTxtField;
+    @FXML
+    private TextField passwordTxtField;
     @FXML
     protected void SwitchSceneSignUp(){
         // Load the new scene
@@ -46,4 +48,19 @@ public class SignUpController {
     protected void DownTip(){
         thinkaboutInsurance.setOpacity(0);
     }
-}
+
+
+    @FXML
+    protected void signUpUser() {
+        DataBaseConnectionVerification dataBaseConnectionVerification = new DataBaseConnectionVerification();
+
+        if (emailTxtField.getText().isEmpty() == false && passwordTxtField.getText().isEmpty() == false)
+            dataBaseConnectionVerification.signupUser((Stage) SignUp.getScene().getWindow(), emailTxtField.getText(), passwordTxtField.getText());
+        else {
+            Alert aler = new Alert(Alert.AlertType.INFORMATION);
+            aler.setContentText("Введите данные во все поля!");
+            aler.setTitle("Данные не введены во все поля");
+            aler.show();
+        }
+
+    }}
