@@ -19,6 +19,8 @@ public class SignUpController {
     @FXML
     public Button SignUp;
     @FXML
+    public Label thinkaboutInsurance;
+    @FXML
     protected void SwitchSceneSignUp(){
         // Load the new scene
         try {
@@ -34,5 +36,14 @@ public class SignUpController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void UpTip(){
+        thinkaboutInsurance.setOpacity(1);
+    }
+    @FXML
+    protected void DownTip(){
+        thinkaboutInsurance.setOpacity(0);
     }
 }

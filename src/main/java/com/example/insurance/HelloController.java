@@ -66,14 +66,13 @@ public class HelloController {
             }
 
         }
-        @FXML
-        protected void UpTip(){
+        @FXML protected void UpTip(){
         thinkaboutcode.setOpacity(1);
         }
-    @FXML
-    protected void DownTip(){
+        @FXML
+        protected void DownTip(){
         thinkaboutcode.setOpacity(0);
-    }
+        }
 
 
 
