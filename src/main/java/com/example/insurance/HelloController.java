@@ -14,28 +14,42 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Objects;
 
 public class HelloController {
-    //Creating a graphic (image)
-
-
-
 
     @FXML
     public TextField PhoneTextField;
     @FXML
-    Text coloredText = new Text();
+    public TextField Name;
     @FXML
-    public Button SignUp;
+    public TextField Surname;
     @FXML
-    public GridPane GridPanel;
+    public TextField LastName;
     @FXML
     public DatePicker Calendar;
 
     @FXML
+    public TextField email;
+    @FXML
+    public PasswordField Password;
+    @FXML
+    public PasswordField Password1;
+    @FXML
+    public TextField EmployeeCode;
+
+    @FXML
+    public Button SignUp;
+    @FXML
+    public GridPane GridPanel;
+
+
+    @FXML
     public Label thinkaboutcode;
 
-    // The method to handle the InputMethodTextChanged event
+
     @FXML
     protected void ClearTextFields() {
         for (Node node : GridPanel.getChildren()) {
@@ -73,7 +87,20 @@ public class HelloController {
         protected void DownTip(){
         thinkaboutcode.setOpacity(0);
         }
-
+        @FXML
+        protected void TryLogIn(){
+            java.time.LocalDate selectedDate = Calendar.getValue();
+            if(Objects.equals(Password.getText(), Password1.getText())&&!Password.getText().isEmpty()){
+                DataBaseConnectionVerification DBConVer=new DataBaseConnectionVerification();
+                if(EmployeeCode.getText().isEmpty()) DBConVer.LogInUser(Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText());
+                else DBConVer.LogInUser(Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText(),EmployeeCode.getText());
+            }
+            else{
+                Alert alert=new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Поля для пароля не совпадают!");
+                alert.show();
+            }
+        }
 
 
 

@@ -54,13 +54,13 @@ public class SignUpController {
     protected void signUpUser() {
         DataBaseConnectionVerification dataBaseConnectionVerification = new DataBaseConnectionVerification();
 
-        if (emailTxtField.getText().isEmpty() == false && passwordTxtField.getText().isEmpty() == false)
+        if (!emailTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty())
             dataBaseConnectionVerification.signupUser((Stage) SignUp.getScene().getWindow(), emailTxtField.getText(), passwordTxtField.getText());
         else {
-            Alert aler = new Alert(Alert.AlertType.INFORMATION);
-            aler.setContentText("Введите данные во все поля!");
-            aler.setTitle("Данные не введены во все поля");
-            aler.show();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Введите данные во все поля!");
+            alert.setTitle("Данные не введены во все поля");
+            alert.show();
         }
 
     }}
