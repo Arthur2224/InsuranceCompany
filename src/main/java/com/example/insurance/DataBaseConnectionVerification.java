@@ -36,20 +36,27 @@ public class DataBaseConnectionVerification {
     /*
     Actually same method but it's get x2 more values to find user by email and password(id etc)
     */
-    private boolean CheckPassword(String table,String column1,String value1,String column2,String value2){
-        PreparedStatement psCheckUserExist=null;
+    private boolean CheckPassword(String table,String emailOrID,String value1,String passwordOrID,String value2){
+
             PreparedStatement psCheckUsersPassword=null;
+            PreparedStatement findIDbyEmail=null;
             ResultSet resultSet=null;
+            ResultSet resultSet1=null;
             try{
                 connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
-                psCheckUserExist=connection.prepareStatement("SELECT * FROM+"+table+"+ WHERE"+column1+ "="+value1+" AND "+column2+"+=?");
+                findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+emailOrID+" = ?");
+                findIDbyEmail.setString(1,value1);
+                resultSet=findIDbyEmail.executeQuery();
+                if(resultSet.next()){
 
-                psCheckUserExist.setString(1,value2);
+                    psCheckUsersPassword=connection.prepareStatement("SELECT "+passwordOrID+" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
+                    resultSet1=psCheckUsersPassword.executeQuery();
+                    if(resultSet1.next()){
+                        if( value2.equals(resultSet1.getString("password")) ) return  true;
+                    }
+                }
 
-                resultSet= psCheckUserExist.executeQuery();
-                if(resultSet.isBeforeFirst()) return true;
-                else return false;
-
+                return false;
             }
             catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -126,14 +133,15 @@ public class DataBaseConnectionVerification {
 
         try{
             connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
-            psCheckUserExist=connection.prepareStatement("SELECT * FROM client WHERE email =? AND password =? ");
-            psCheckUserExist.setString(1,email);
-            psCheckUserExist.setString(2,password);
-            resultSet= psCheckUserExist.executeQuery();
 
-            if(CheckUserExist("client","email",email)){
+            boolean client=CheckUserExist("client","email",email);
+            boolean employee=CheckUserExist("employee","email",email);
+            if(client||employee){
+
+                if(CheckPassword("client","email",email,"password",password)||CheckPassword("employee","email",email,"password",password)){
+
                 try {
-                    psCheckUserExist.close();
+                    if(psCheckUserExist!=null) psCheckUserExist.close();
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
                     Parent root = loader.load();
@@ -143,6 +151,11 @@ public class DataBaseConnectionVerification {
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
+                }}
+                else{
+                    Alert alert=new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Введен неправильный пароль!");
+                    alert.show();
                 }
             }
             else{
