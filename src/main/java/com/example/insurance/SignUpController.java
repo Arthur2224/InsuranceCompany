@@ -48,7 +48,14 @@ public class SignUpController {
     protected void DownTip(){
         thinkaboutInsurance.setOpacity(0);
     }
-
+    @FXML
+    protected void SignUpColorUp(){
+        TrySignUp.setStyle("-fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 70% );-fx-border-width:6px;-fx-background-color:null;-fx-border-radius:5px;-fx-font: 18 Arial;");
+    }
+    @FXML
+    protected void SignUpColorDown(){
+        TrySignUp.setStyle("-fx-border-color:  linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% );-fx-border-width:4px;-fx-background-color:null;-fx-border-radius:0px");
+    }
 
     @FXML
     protected void signUpUser() {
