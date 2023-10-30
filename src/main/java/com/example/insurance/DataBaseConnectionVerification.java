@@ -9,9 +9,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DataBaseConnectionVerification {
     Connection connection;
+    public int client_id;
 
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
@@ -48,7 +51,7 @@ public class DataBaseConnectionVerification {
                 findIDbyEmail.setString(1,value1);
                 resultSet=findIDbyEmail.executeQuery();
                 if(resultSet.next()){
-
+                    client_id=resultSet.getInt("ID");
                     psCheckUsersPassword=connection.prepareStatement("SELECT "+passwordOrID+" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
                     resultSet1=psCheckUsersPassword.executeQuery();
                     if(resultSet1.next()){
@@ -166,5 +169,35 @@ public class DataBaseConnectionVerification {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+
+    public void SetNewContract(int validality,int cost,int payout,int type_of_insurance){
+        PreparedStatement InsertNewContract=null;
+
+
+        try {
+            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime end_date=now.plusDays(validality);
+            System.out.println(dtf.format(now));                  //  2021/03/22 16:37:15
+            InsertNewContract=connection.prepareStatement("INSERT INTO contracts ( client_id, start_date, validality, cost, payout,end_date,status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+            InsertNewContract.setInt(1,client_id);
+            // Assuming now is your LocalDateTime
+            String formattedDate = dtf.format(now);
+            InsertNewContract.setDate(2, java.sql.Date.valueOf(formattedDate.substring(0, 10))); // Extract the "yyyy-MM-dd" part
+            InsertNewContract.setInt(3,validality);
+            InsertNewContract.setInt(4, cost);
+            InsertNewContract.setInt(5,payout);
+            //InsertNewContract.setInt(6,);
+            InsertNewContract.setDate(6, java.sql.Date.valueOf(String.valueOf(end_date)));
+            InsertNewContract.setString(7,"Приостановлен");
+            InsertNewContract.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
