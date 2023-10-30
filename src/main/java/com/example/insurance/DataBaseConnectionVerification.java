@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DataBaseConnectionVerification {
     Connection connection;
-    public int client_id;
+    public static int client_id;
 
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
@@ -52,6 +52,7 @@ public class DataBaseConnectionVerification {
                 resultSet=findIDbyEmail.executeQuery();
                 if(resultSet.next()){
                     client_id=resultSet.getInt("ID");
+                    System.out.println("CheckPassword : ClientId: "+client_id);
                     psCheckUsersPassword=connection.prepareStatement("SELECT "+passwordOrID+" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
                     resultSet1=psCheckUsersPassword.executeQuery();
                     if(resultSet1.next()){
@@ -97,7 +98,7 @@ public class DataBaseConnectionVerification {
         }
     }
     //For employees that's has special code
-    public void LogInUser(String name, String surname, String lastname, String number, LocalDate birthday, String email,String password, String idOfEmployee){
+    public void LogInUser(Stage stage,String name, String surname, String lastname, String number, LocalDate birthday, String email,String password, String idOfEmployee){
         PreparedStatement UpdateNewData=null;
 
         String newDate=String.valueOf(birthday);
@@ -121,7 +122,20 @@ public class DataBaseConnectionVerification {
             }
             catch (SQLException e) {
                 e.printStackTrace();
-            }}
+            }
+
+            try {
+
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root, 1280, 720);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -174,25 +188,27 @@ public class DataBaseConnectionVerification {
 
     public void SetNewContract(int validality,int cost,int payout,int type_of_insurance){
         PreparedStatement InsertNewContract=null;
-
+        System.out.println(client_id);
 
         try {
             connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime end_date=now.plusDays(validality);
-            System.out.println(dtf.format(now));                  //  2021/03/22 16:37:15
+             //  2021/03/22 16:37:15
             InsertNewContract=connection.prepareStatement("INSERT INTO contracts ( client_id, start_date, validality, cost, payout,end_date,status) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             InsertNewContract.setInt(1,client_id);
             // Assuming now is your LocalDateTime
             String formattedDate = dtf.format(now);
-            InsertNewContract.setDate(2, java.sql.Date.valueOf(formattedDate.substring(0, 10))); // Extract the "yyyy-MM-dd" part
+            InsertNewContract.setDate(2, java.sql.Date.valueOf(now.toLocalDate()));
+            // Extract the "yyyy-MM-dd" part
             InsertNewContract.setInt(3,validality);
             InsertNewContract.setInt(4, cost);
             InsertNewContract.setInt(5,payout);
             //InsertNewContract.setInt(6,);
-            InsertNewContract.setDate(6, java.sql.Date.valueOf(String.valueOf(end_date)));
+            InsertNewContract.setDate(6, java.sql.Date.valueOf(end_date.toLocalDate()));
+
             InsertNewContract.setString(7,"Приостановлен");
             InsertNewContract.executeUpdate();
         } catch (SQLException e) {

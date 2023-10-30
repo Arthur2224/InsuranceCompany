@@ -93,7 +93,7 @@ public class HelloController {
             if(Objects.equals(Password.getText(), Password1.getText())&&!Password.getText().isEmpty()){
                 DataBaseConnectionVerification DBConVer=new DataBaseConnectionVerification();
                 if(EmployeeCode.getText().isEmpty()) DBConVer.LogInUser(Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText());
-                else DBConVer.LogInUser(Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText(),EmployeeCode.getText());
+                else DBConVer.LogInUser(new Stage(),Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText(),EmployeeCode.getText());
             }
             else{
                 Alert alert=new Alert(Alert.AlertType.ERROR);
