@@ -216,4 +216,32 @@ public class DataBaseConnectionVerification {
         }
 
     }
+
+    public  Object[] getDescriptionOfInsuranceType(int insurance_id){
+        PreparedStatement getDataOfInsuranceType=null;
+        ResultSet resultSet=null;
+        Object[] dataOfIT=new Object[7];
+        try{
+            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            getDataOfInsuranceType=connection.prepareStatement("SELECT * FROM insurancetypes WHERE ID = "+insurance_id);
+            resultSet=getDataOfInsuranceType.executeQuery();
+            if(resultSet.next()){
+                dataOfIT[0]=resultSet.getString("insurance_name");
+                dataOfIT[1]=resultSet.getString("description");
+                dataOfIT[2]=resultSet.getInt("min_duration");
+                dataOfIT[3]=resultSet.getInt("max_duration");
+                dataOfIT[4]=resultSet.getInt("min_coverage");
+                dataOfIT[5]=resultSet.getInt("max_coverage");
+                dataOfIT[6]=resultSet.getInt("base_price");
+            }
+
+
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return dataOfIT;
+    }
+
+
 }
