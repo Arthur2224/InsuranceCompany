@@ -21,7 +21,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement psCheckUsersPassword = null;
         ResultSet resultSet = null;
         try {
-            connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
+            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
             psCheckUserExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?");
 
             psCheckUserExist.setString(1, value);
@@ -43,7 +43,7 @@ public class DataBaseConnectionVerification {
             ResultSet resultSet=null;
             ResultSet resultSet1=null;
             try{
-                connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
+                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
                 findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+emailOrID+" = ?");
                 findIDbyEmail.setString(1,value1);
                 resultSet=findIDbyEmail.executeQuery();
@@ -74,7 +74,7 @@ public class DataBaseConnectionVerification {
         if(!CheckUserExist("client","email",email)){
 
             try{
-                connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
+                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
                 InsertDataToDB=connection.prepareStatement("INSERT INTO client ( first_name, second_name, last_name, date_of_birth, email, password,phone_number) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 InsertDataToDB.setString(1,name);
@@ -102,7 +102,7 @@ public class DataBaseConnectionVerification {
         System.out.println(name.getClass());
         if(!CheckUserExist("employee","email",email)){
             try{
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany", "root", "123456789ABC!");
+                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
                 UpdateNewData = connection.prepareStatement("UPDATE employee SET " +
                         "first_name = '" + name + "', " +
                         "second_name = '" + surname + "', " +
@@ -132,7 +132,7 @@ public class DataBaseConnectionVerification {
 
 
         try{
-            connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/insurancecompany","root","123456789ABC!");
+            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
 
             boolean client=CheckUserExist("client","email",email);
             boolean employee=CheckUserExist("employee","email",email);

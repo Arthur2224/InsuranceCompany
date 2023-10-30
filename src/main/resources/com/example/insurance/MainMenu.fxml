@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.MainMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.MainMenuController">
    <top>
       <Pane prefHeight="96.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <TabPane prefHeight="616.0" prefWidth="1280.0" style="-fx-background-color: null;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="66.0" tabMaxWidth="200.0" tabMinHeight="66.0" tabMinWidth="200.0" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="616.0" prefWidth="1280.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="66.0" tabMaxWidth="200.0" tabMinHeight="66.0" tabMinWidth="200.0" BorderPane.alignment="CENTER">
         <tabs>
           <Tab style="-fx-background-color: null;" text="О компании">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
                         <VBox layoutY="-1.0" prefHeight="554.0" prefWidth="1280.0">
                            <children>
