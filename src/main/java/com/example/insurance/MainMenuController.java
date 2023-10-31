@@ -1,127 +1,209 @@
 package com.example.insurance;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 
-import java.lang.reflect.Type;
+import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.parseInt;
 
 public class MainMenuController implements Initializable{
     DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
     @FXML
-    public Label TipForterm;
+    public Label TipForterm_auto;
     @FXML
-    private Label Description;
+    public Label TipForterm_life;
     @FXML
-    private Label TipForCoverage;
+    public Label TipForterm_house;
+    @FXML
+    private Label Description_auto;
+    @FXML
+    private Label Description_life;
+    @FXML
+    private Label Description_house;
+    @FXML
+    private Label TipForCoverage_auto;
+    @FXML
+    private Label TipForCoverage_life;
+    @FXML
+    private Label TipForCoverage_house;
+
     private Object[] TypeOfInsuranceDescrip;
    @FXML
-    public TextField term;
-
+    public TextField term_auto;
     @FXML
-    public TextField coverage;
+    public TextField term_life;
+    @FXML
+    public TextField term_house;
+    @FXML
+    public TextField coverage_auto;
+    @FXML
+    public TextField coverage_life;
+    @FXML
+    public TextField coverage_house;
 
-    public static int base_price;
-    public static int min_duration;
-    public static int max_duration;
-    public static int min_coverage;
-    public static int max_coverage;
-    public Label totalPrice;
-    public static int  coverageInt;
-    public static int termInt;
+    public  int base_price;
+    public  int min_duration;
+    public  int max_duration;
+    public  int min_coverage;
+    public  int max_coverage;
+    public Label totalPrice_auto;
+    public Label totalPrice_life;
+    public Label totalPrice_house;
+    public  int  coverageInt;
+    public  int termInt;
+    private Tab currentTab;
 
     @FXML
     protected void setNewContract(){
         DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
         int cost=base_price;
-        String value = term.getText();
+       // String value = term.getText();
 
 
-        System.out.println(cost);
+
         int payout= (int) (cost*1.6);
-        DB.SetNewContract( parseInt(term.getText()), cost,payout,1);
+        //DB.SetNewContract( parseInt(term.getText()), cost,payout,1);
 
     }
+
+    @FXML
+    protected void onTabSelectionChanged(Event event) {
+        Tab selectedTab = (Tab) event.getSource();
+
+        if (currentTab != selectedTab) {
+            if (selectedTab.getId().equals("autoTab")) {
+                getDescriptonOfInsuranceType(1);
+            } else if (selectedTab.getId().equals("lifeTab")) {
+                getDescriptonOfInsuranceType(2);
+            } else if (selectedTab.getId().equals("houseTab")) {
+                getDescriptonOfInsuranceType(3);
+            }
+            currentTab = selectedTab;
+        }
+    }
+
+
     @FXML
     protected void getDescriptonOfInsuranceType(int id){
-
         TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(id);
-        Description.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
         min_duration=(int)TypeOfInsuranceDescrip[2];
         max_duration=(int)TypeOfInsuranceDescrip[3];
         min_coverage=(int)TypeOfInsuranceDescrip[4];
         max_coverage=(int)TypeOfInsuranceDescrip[5];
         base_price=(int)TypeOfInsuranceDescrip[6];
-
     }
-    @FXML
-    protected void getDescriptonOfInsuranceTypeForAuto(){
-
-       getDescriptonOfInsuranceType(1);
+    private Node findElementByName(String name, Class<?> elementType) {
+        try {
+            Field field = getClass().getDeclaredField(name);
+            if (field.getType() == elementType) {
+                return (Node) field.get(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    @FXML
-    protected void getDescriptonOfInsuranceTypeForLife(){
 
-        getDescriptonOfInsuranceType(2);
-    }
-    @FXML
-    protected void getDescriptonOfInsuranceTypeForHouse(){
 
-        getDescriptonOfInsuranceType(3);
-    }
+
+
 
     @FXML
     protected void checkDataForTerm(){
-
+        String specific_name="";
+        if (currentTab.getId().equals("autoTab")) {
+           specific_name="auto";
+        } else if (currentTab.getId().equals("lifeTab")) {
+            specific_name="life";
+        } else if (currentTab.getId().equals("houseTab")) {
+            specific_name="house";
+        }
+        Label label = (Label) findElementByName("TipForterm_" + specific_name,Label.class);
+        Label label1= (Label)findElementByName("totalPrice_" + specific_name, Label.class);
+        TextField textField=(TextField) findElementByName("term_" + specific_name,TextField.class);
         try {
-            termInt = Integer.parseInt(term.getText());
+
+            termInt = Integer.parseInt(textField.getText());
 
             if (termInt < min_duration || termInt > max_duration) {
-                term.clear();
-                TipForterm.setVisible(true);
-                TipForterm.setText("Минимальное кол-во дней: " + min_duration + "\nМаксимальное: " + max_duration);
+                textField.clear();
+                label.setVisible(true);
+                label.setText("Минимальное кол-во дней: " + min_duration + "\nМаксимальное: " + max_duration);
             } else {
-                TipForterm.setVisible(false);
-                totalPrice.setText(String.valueOf(( base_price*termInt+coverageInt)/1000.0 ));
+                label.setVisible(false);
+                label1.setText(String.valueOf(( base_price*termInt+coverageInt)/1000.0 ));
             }
         } catch (NumberFormatException e) {
 
-            term.clear();
-            TipForterm.setVisible(true);
-            TipForterm.setText("Введите корректное число дней.");
+            textField.clear();
+            label.setVisible(true);
+            label.setText("Введите корректное число дней.");
         }
     }
     @FXML
     protected void checkDataForCoverage(){
+        String specific_name="";
+        if (currentTab.getId().equals("autoTab")) {
+
+            specific_name="auto";
+        } else if (currentTab.getId().equals("lifeTab")) {
+            specific_name="life";
+        } else if (currentTab.getId().equals("houseTab")) {
+            specific_name="house";
+        }
+        Label label = (Label) findElementByName("TipForCoverage_"+specific_name,Label.class);
+
+        Label label1= (Label)findElementByName("totalPrice_"+ specific_name, Label.class);
+        TextField textField=(TextField) findElementByName("coverage_" + specific_name,TextField.class);
         try {
-             coverageInt = Integer.parseInt(coverage.getText());
+             coverageInt = Integer.parseInt(textField.getText());
 
             if (coverageInt < min_coverage || coverageInt > max_coverage) {
-                TipForCoverage.setVisible(true);
-                TipForCoverage.setText("Минимальное покрытие: " + min_coverage + "\nМаксимальное: " + max_coverage);
-                coverage.clear();
+                label.setVisible(true);
+                label.setText("Минимальное покрытие: " + min_coverage + "\nМаксимальное: " + max_coverage);
+                textField.clear();
             } else {
-                TipForCoverage.setVisible(false);
-                totalPrice.setText(String.valueOf(( base_price*termInt+coverageInt)/100.0));
+                label.setVisible(false);
+                label1.setText(String.valueOf(( base_price*termInt+coverageInt)/100.0));
             }
         } catch (NumberFormatException e) {
-            coverage.clear();
-            TipForCoverage.setVisible(true);
-            TipForCoverage.setText("Введите корректную сумму\nстрахового покрытия.");
+            textField.clear();
+            label.setVisible(true);
+            label.setText("Введите корректную сумму\nстрахового покрытия.");
         }
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Label label =  (Label) findElementByName("Description_" + "auto",Label.class);
+
+        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(1);
+        if (label!=null) {
+            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+
+        }
+        label =  (Label) findElementByName("Description_" + "life",Label.class);;
+        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(2);
+        if (label!=null) {
+            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+
+        }
+         label =  (Label) findElementByName("Description_" + "house",Label.class);;
+        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(3);
+        if (label!=null) {
+            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+
+        }
+        currentTab = null;
 
     }
 }
