@@ -200,7 +200,7 @@ public class DataBaseConnectionVerification {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime end_date=now.plusDays(validality);
              //  2021/03/22 16:37:15
-            InsertNewContract=connection.prepareStatement("INSERT INTO contracts ( client_id, start_date, validality, cost, payout,end_date,status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            InsertNewContract=connection.prepareStatement("INSERT INTO contracts ( client_id, start_date, validality, cost, payout,end_date,status,type_of_insurance) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
 
             InsertNewContract.setInt(1,client_id);
             // Assuming now is your LocalDateTime
@@ -214,6 +214,7 @@ public class DataBaseConnectionVerification {
             InsertNewContract.setDate(6, java.sql.Date.valueOf(end_date.toLocalDate()));
 
             InsertNewContract.setString(7,"Приостановлен");
+            InsertNewContract.setInt(8,type_of_insurance);
             InsertNewContract.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

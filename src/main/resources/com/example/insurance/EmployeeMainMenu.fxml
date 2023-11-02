@@ -79,7 +79,7 @@
                         <Button layoutX="71.0" layoutY="14.0" mnemonicParsing="false" onAction="#upDateTable" text="Обновить" />
                         <Button layoutX="158.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
                         <Button layoutX="226.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
-                        <TableView fx:id="contracts" layoutX="31.0" layoutY="121.0" prefHeight="200.0" prefWidth="729.0">
+                        <TableView fx:id="contracts" layoutX="31.0" layoutY="121.0" prefHeight="200.0" prefWidth="899.0">
                           <columns>
                             <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="client" prefWidth="75.0" text="ID клиента" />
@@ -89,7 +89,9 @@
                               <TableColumn fx:id="payout" prefWidth="75.0" text="Выплаты" />
                               <TableColumn fx:id="start_date" prefWidth="75.0" text="Дата начала" />
                               <TableColumn fx:id="validality" prefWidth="75.0" text="Срок" />
-                              <TableColumn fx:id="status" prefWidth="75.0" text="Статус" />
+                              <TableColumn fx:id="status" prefWidth="128.0" text="Статус" />
+                              <TableColumn fx:id="agreeButtonColumn" prefWidth="75.0" text="Одобрить" />
+                              <TableColumn fx:id="disagreeButtonColumn" prefWidth="75.0" text="Отклонить" />
                           </columns>
                         </TableView>
                      </children>
