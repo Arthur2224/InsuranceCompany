@@ -1,5 +1,7 @@
 package com.example.insurance;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class DataBaseConnectionVerification {
     Connection connection;
     public static int client_id;
+    public static  boolean employee;
 
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
@@ -52,7 +55,6 @@ public class DataBaseConnectionVerification {
                 resultSet=findIDbyEmail.executeQuery();
                 if(resultSet.next()){
                     client_id=resultSet.getInt("ID");
-                    System.out.println("CheckPassword : ClientId: "+client_id);
                     psCheckUsersPassword=connection.prepareStatement("SELECT "+passwordOrID+" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
                     resultSet1=psCheckUsersPassword.executeQuery();
                     if(resultSet1.next()){
@@ -140,7 +142,7 @@ public class DataBaseConnectionVerification {
 
 
     public void signupUser(Stage stage, String email, String password){
-        
+
         PreparedStatement psInset=null;
         PreparedStatement psCheckUserExist=null;
         PreparedStatement psCheckUsersPassword=null;
@@ -152,15 +154,17 @@ public class DataBaseConnectionVerification {
             connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
 
             boolean client=CheckUserExist("client","email",email);
-            boolean employee=CheckUserExist("employee","email",email);
+            employee=CheckUserExist("employee","email",email);
             if(client||employee){
 
                 if(CheckPassword("client","email",email,"password",password)||CheckPassword("employee","email",email,"password",password)){
 
                 try {
                     if(psCheckUserExist!=null) psCheckUserExist.close();
+                    FXMLLoader loader=null;
+                    if(employee) loader = new FXMLLoader(getClass().getResource("EmployeeMainMenu.fxml"));
+                    else  loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
                     Parent root = loader.load();
 
                     Scene scene = new Scene(root, 1280, 720);
@@ -241,6 +245,62 @@ public class DataBaseConnectionVerification {
             throw new RuntimeException(e);
         }
         return dataOfIT;
+    }
+    public ObservableList<Contracts> getContacts() {
+        PreparedStatement getContracts = null;
+        ResultSet resultSet = null;
+        ObservableList<Contracts> contracts = FXCollections.observableArrayList(); // Initialize the list
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC");
+            getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality, \n" +
+                    "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status, \n" +
+                    "    insurancetypes.insurance_name AS name \n" +
+                    "FROM contracts \n" +
+                    "JOIN insurancetypes ON contracts.type_of_insurance = insurancetypes.ID\n");
+            resultSet = getContracts.executeQuery();
+
+            while (resultSet.next()) {
+                Contracts contracts1 = new Contracts();
+                contracts1.setId(resultSet.getInt("contracts.ID"));
+                contracts1.setId_client(resultSet.getInt("contracts.client_id"));
+                contracts1.setId_employee(resultSet.getInt("contracts.employee_id"));
+                contracts1.setStart_date(resultSet.getString("contracts.start_date"));
+                contracts1.setValidality(resultSet.getInt("contracts.validality"));
+                contracts1.setCost(resultSet.getInt("contracts.cost"));
+                contracts1.setPayout(resultSet.getInt("contracts.payout"));
+                contracts1.setStatus(resultSet.getString("contracts.status"));
+                contracts1.setType_of_insurance(resultSet.getString("name"));
+                contracts.add(contracts1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a finally block
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (getContracts != null) {
+                try {
+                    getContracts.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return contracts; // Return the populated list
     }
 
 

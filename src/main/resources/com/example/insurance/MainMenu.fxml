@@ -79,7 +79,7 @@
                                 <children>
                                     <Label fx:id="Description_auto" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" prefHeight="45.0" prefWidth="1242.0" textAlignment="RIGHT" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
                                         <font>
-                                            <Font name="Cascadia Code Regular" size="12.0" />
+                                            <Font name="Cascadia Code Regular" size="14.0" />
                                         </font>
                                     </Label>
                                     <GridPane layoutX="-1.0" layoutY="-2.0" prefHeight="555.0" prefWidth="1280.0" style="-fx-border-color: #301c94; -fx-border-width: 5px; -fx-background-color: null;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">
@@ -184,7 +184,7 @@
                          <children>
                             <Label fx:id="Description_life" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" prefHeight="31.0" prefWidth="1242.0" textAlignment="RIGHT" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
                                <font>
-                                  <Font name="Cascadia Code Regular" size="12.0" />
+                                  <Font name="Cascadia Code Regular" size="14.0" />
                                </font>
                             </Label>
                             <GridPane layoutX="-1.0" layoutY="-2.0" prefHeight="555.0" prefWidth="1280.0" style="-fx-border-color: #301c94; -fx-border-width: 5px; -fx-background-color: null;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">
@@ -205,17 +205,17 @@
                                         <Insets left="50.0" right="50.0" />
                                      </GridPane.margin>
                                   </TextField>
-                                  <TextField promptText="Модель" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1">
+                                  <TextField promptText="Доход" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="1">
                                      <GridPane.margin>
                                         <Insets left="50.0" right="50.0" />
                                      </GridPane.margin>
                                   </TextField>
-                                  <TextField promptText="Год выпуска" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="2">
+                                  <TextField promptText="Профессия" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="2">
                                      <GridPane.margin>
                                         <Insets left="50.0" right="50.0" />
                                      </GridPane.margin>
                                   </TextField>
-                                  <TextField promptText="VIN-номер" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="3">
+                                  <TextField promptText="Бенефициар" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-prompt-text-fill: #301c94;" GridPane.columnIndex="3">
                                      <GridPane.margin>
                                         <Insets left="50.0" right="50.0" />
                                      </GridPane.margin>
@@ -291,7 +291,7 @@
                          <children>
                             <Label fx:id="Description_house" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" prefHeight="30.0" prefWidth="1242.0" textAlignment="RIGHT" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
                                <font>
-                                  <Font name="Cascadia Code Regular" size="12.0" />
+                                  <Font name="Cascadia Code Regular" size="14.0" />
                                </font>
                             </Label>
                             <GridPane layoutX="-1.0" layoutY="-2.0" prefHeight="555.0" prefWidth="1280.0" style="-fx-border-color: #301c94; -fx-border-width: 5px; -fx-background-color: null;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">

@@ -16,6 +16,7 @@ import static java.lang.Integer.parseInt;
 
 public class MainMenuController implements Initializable{
     DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
+    private boolean employee;
     @FXML
     public Label TipForterm_auto;
     @FXML
@@ -48,6 +49,11 @@ public class MainMenuController implements Initializable{
     public TextField coverage_life;
     @FXML
     public TextField coverage_house;
+    @FXML
+    public Tab autoTab;
+    @FXML
+    public  Tab lifeTab;
+    @FXML   Tab houseTab;
 
     public  int base_price;
     public  int min_duration;
@@ -112,10 +118,6 @@ public class MainMenuController implements Initializable{
         return null;
     }
 
-
-
-
-
     @FXML
     protected void checkDataForTerm(){
         String specific_name="";
@@ -139,7 +141,7 @@ public class MainMenuController implements Initializable{
                 label.setText("Минимальное кол-во дней: " + min_duration + "\nМаксимальное: " + max_duration);
             } else {
                 label.setVisible(false);
-                label1.setText(String.valueOf(( base_price*termInt+coverageInt)/1000.0 ));
+                label1.setText(String.valueOf(( base_price*termInt+coverageInt)));
             }
         } catch (NumberFormatException e) {
 
@@ -160,7 +162,6 @@ public class MainMenuController implements Initializable{
             specific_name="house";
         }
         Label label = (Label) findElementByName("TipForCoverage_"+specific_name,Label.class);
-
         Label label1= (Label)findElementByName("totalPrice_"+ specific_name, Label.class);
         TextField textField=(TextField) findElementByName("coverage_" + specific_name,TextField.class);
         try {
@@ -172,7 +173,7 @@ public class MainMenuController implements Initializable{
                 textField.clear();
             } else {
                 label.setVisible(false);
-                label1.setText(String.valueOf(( base_price*termInt+coverageInt)/100.0));
+                label1.setText(String.valueOf(( base_price*termInt+coverageInt)));
             }
         } catch (NumberFormatException e) {
             textField.clear();
@@ -184,6 +185,13 @@ public class MainMenuController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        employee=DB.employee;
+        if(employee){
+            autoTab.setDisable(true);
+            lifeTab.setDisable(true);
+            houseTab.setDisable(true);
+
+        }
         Label label =  (Label) findElementByName("Description_" + "auto",Label.class);
 
         TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(1);
@@ -203,6 +211,7 @@ public class MainMenuController implements Initializable{
             label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
 
         }
+
         currentTab = null;
 
     }
