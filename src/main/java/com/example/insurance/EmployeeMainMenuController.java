@@ -10,9 +10,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory; // Correct import
 
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class EmployeeMainMenuController implements Initializable {
@@ -24,25 +26,25 @@ public class EmployeeMainMenuController implements Initializable {
     private TableView<Contracts> contracts; // Specify the type for TableView
 
     @FXML
-    private TreeTableColumn<Contracts, Integer> client;
+    private TableColumn<Contracts, Integer> client;
 
     @FXML
-    private TreeTableColumn<Contracts, Integer> cost;
+    private TableColumn<Contracts, Integer> cost;
 
     @FXML
-    private TreeTableColumn<Contracts, Integer> id;
+    private TableColumn<Contracts, Integer> id;
 
     @FXML
-    private TreeTableColumn<Contracts, Integer> payout;
+    private TableColumn<Contracts, Integer> payout;
 
     @FXML
-    private TreeTableColumn<Contracts, String> start_date;
+    private TableColumn<Contracts, String> start_date;
 
     @FXML
-    private TreeTableColumn<Contracts, String> status;
+    private TableColumn<Contracts, String> status;
 
     @FXML
-    private TreeTableColumn<Contracts, String> type;
+    private TableColumn<Contracts, String> type;
 
     @FXML
     private TableColumn<Contracts, Integer> validality;
@@ -52,14 +54,14 @@ public class EmployeeMainMenuController implements Initializable {
         ObservableList<Contracts> list = FXCollections.observableArrayList();
         DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
         list = DB.getContacts();
-        client.setCellValueFactory(new TreeItemPropertyValueFactory<>("id_client"));
-        cost.setCellValueFactory(new TreeItemPropertyValueFactory<>("cost"));
-        id.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
-        payout.setCellValueFactory(new TreeItemPropertyValueFactory<>("payout"));
-        start_date.setCellValueFactory(new TreeItemPropertyValueFactory<>("start_date"));
-        validality.setCellValueFactory(new TreeItemPropertyValueFactory<>("validality"));
-        status.setCellValueFactory(new TreeItemPropertyValueFactory<>("status"));
-        type.setCellValueFactory(new TreeItemPropertyValueFactory<>("type_of_insurance"));
+        client.setCellValueFactory(new PropertyValueFactory<>("id_client"));
+        cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        payout.setCellValueFactory(new PropertyValueFactory<>("payout"));
+        start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
+        validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type_of_insurance"));
 
         contracts.setItems(list);
     }
