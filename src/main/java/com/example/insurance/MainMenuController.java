@@ -71,12 +71,24 @@ public class MainMenuController implements Initializable{
     protected void setNewContract(){
         DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
         int cost=base_price;
-       // String value = term.getText();
-
-
-
-        int payout= (int) (cost*1.6);
-        //DB.SetNewContract( parseInt(term.getText()), cost,payout,1);
+        int id=1;
+        String specific_name="";
+        if (currentTab.getId().equals("autoTab")) {
+            specific_name="auto";
+            id=1;
+        } else if (currentTab.getId().equals("lifeTab")) {
+            specific_name="life";
+            id=2;
+        } else if (currentTab.getId().equals("houseTab")) {
+            specific_name="house";
+            id=3;
+        }
+        Label label = (Label) findElementByName("totalPrice_" + specific_name,Label.class);
+        TextField textField1=(TextField) findElementByName("coverage_" + specific_name,TextField.class);
+        TextField textField=(TextField) findElementByName("term_" + specific_name,TextField.class);
+        int term=Integer.parseInt(textField.getText());
+        int coverage=Integer.parseInt(label.getText());
+        DB.SetNewContract(term,coverage,term*base_price+coverage,id);
 
     }
 

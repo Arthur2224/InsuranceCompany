@@ -48,9 +48,8 @@ public class EmployeeMainMenuController implements Initializable {
 
     @FXML
     private TableColumn<Contracts, Integer> validality;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    protected void upDateTable(){
         ObservableList<Contracts> list = FXCollections.observableArrayList();
         DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
         list = DB.getContacts();
@@ -64,5 +63,10 @@ public class EmployeeMainMenuController implements Initializable {
         type.setCellValueFactory(new PropertyValueFactory<>("type_of_insurance"));
 
         contracts.setItems(list);
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       upDateTable();
+
     }
 }
