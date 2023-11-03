@@ -2,6 +2,7 @@ package com.example.insurance;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ public class DataBaseConnectionVerification {
     Connection connection;
     public static int client_id;
     public static  boolean employee;
+
 
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
@@ -94,9 +96,11 @@ public class DataBaseConnectionVerification {
                 InsertDataToDB.close();
 
             }
+
             catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            SwitchScene(new Stage(),"SignUp.fxml");
         }
     }
     //For employees that's has special code
@@ -126,17 +130,7 @@ public class DataBaseConnectionVerification {
                 e.printStackTrace();
             }
 
-            try {
-
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root, 1280, 720);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            SwitchScene(stage,"SignUp.fxml");
         }
     }
 
@@ -159,20 +153,12 @@ public class DataBaseConnectionVerification {
 
                 if(CheckPassword("client","email",email,"password",password)||CheckPassword("employee","email",email,"password",password)){
 
-                try {
                     if(psCheckUserExist!=null) psCheckUserExist.close();
-                    FXMLLoader loader=null;
-                    if(employee) loader = new FXMLLoader(getClass().getResource("EmployeeMainMenu.fxml"));
-                    else  loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
 
-                    Parent root = loader.load();
+                    if(employee) SwitchScene(stage,"EmployeeMainMenu.fxml");
+                    else  SwitchScene(stage,"MainMenu.fxml");
 
-                    Scene scene = new Scene(root, 1280, 720);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }}
+                }
                 else{
                     Alert alert=new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Введен неправильный пароль!");
@@ -199,7 +185,7 @@ public class DataBaseConnectionVerification {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime end_date=now.plusDays(validality);
-             //  2021/03/22 16:37:15
+            //  2021/03/22 16:37:15
             InsertNewContract=connection.prepareStatement("INSERT INTO contracts ( client_id, start_date, validality, cost, payout,end_date,status,type_of_insurance) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
 
             InsertNewContract.setInt(1,client_id);
@@ -220,6 +206,19 @@ public class DataBaseConnectionVerification {
             throw new RuntimeException(e);
         }
 
+    }
+    private void SwitchScene(Stage stage, String name_scene) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(name_scene));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Scene scene = new Scene(root, 1280, 720);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public  Object[] getDescriptionOfInsuranceType(int insurance_id){
@@ -247,18 +246,21 @@ public class DataBaseConnectionVerification {
         }
         return dataOfIT;
     }
-    public ObservableList<Contracts> getContacts() {
+    public ObservableList<Contracts> getContacts(String status) {
         PreparedStatement getContracts = null;
         ResultSet resultSet = null;
-        ObservableList<Contracts> contracts = FXCollections.observableArrayList(); // Initialize the list
+        ObservableList<Contracts> contracts = FXCollections.observableArrayList();
+        if(status == null) status ="Приостановлен";
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC");
             getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality, \n" +
                     "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status, \n" +
                     "    insurancetypes.insurance_name AS name \n" +
-                    "FROM contracts \n" +
-                    "JOIN insurancetypes ON contracts.type_of_insurance = insurancetypes.ID\n");
+                    "FROM contracts \n " +
+                    "JOIN insurancetypes ON contracts.type_of_insurance = insurancetypes.ID\n"+
+                    "WHERE contracts.status = ?");
+            getContracts.setString(1,status);
             resultSet = getContracts.executeQuery();
 
             while (resultSet.next()) {
@@ -304,5 +306,92 @@ public class DataBaseConnectionVerification {
         return contracts; // Return the populated list
     }
 
+    @FXML
+    protected void UpdateContract(int id){
+        PreparedStatement UpdateData = null;
+        ResultSet resultSet = null;
 
-}
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC")){
+
+
+            UpdateData= connection.prepareStatement("UPDATE contracts " +
+                     "SET " +
+                     "status = 'Активен', " +
+                     "employee_id = ? "+
+                     "WHERE ID = ?");
+            // Set the values for each placeholder in the PreparedStatement
+            UpdateData.setInt(1, client_id);
+            UpdateData.setInt(2, id);
+
+            int rowsUpdated = UpdateData.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Update successful.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a finally block
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (UpdateData != null) {
+                try {
+                    UpdateData.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+    }
+
+
+
+
+/*
+    public  Object[] getStatistic(Date start_date,Date end_date){
+        PreparedStatement getDataOfInsuranceType=null;
+        ResultSet resultSet=null;
+        Object[] dataOfIT=new Object[7];
+        try{
+            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            getDataOfInsuranceType=connection.prepareStatement("SELECT * FROM contracts WHERE ID = "+insurance_id);
+            resultSet=getDataOfInsuranceType.executeQuery();
+            if(resultSet.next()){
+                dataOfIT[0]=resultSet.getString("insurance_name");
+                dataOfIT[1]=resultSet.getString("description");
+                dataOfIT[2]=resultSet.getInt("min_duration");
+                dataOfIT[3]=resultSet.getInt("max_duration");
+                dataOfIT[4]=resultSet.getInt("min_coverage");
+                dataOfIT[5]=resultSet.getInt("max_coverage");
+                dataOfIT[6]=resultSet.getInt("base_price");
+            }
+
+
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return dataOfIT;
+    }
+*/
+
+}}
+/*
+Необходимо передавать Stage каждый раз при необходимости перейти на новую страницу
+
+
+ */

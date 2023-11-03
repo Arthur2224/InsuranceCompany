@@ -89,6 +89,7 @@ public class MainMenuController implements Initializable{
         int term=Integer.parseInt(textField.getText());
         int coverage=Integer.parseInt(label.getText());
         DB.SetNewContract(term,coverage,term*base_price+coverage,id);
+        System.out.println("It works");
 
     }
 
