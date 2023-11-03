@@ -1,20 +1,18 @@
 package com.example.insurance;
 
-import com.example.insurance.Contracts;
-import com.example.insurance.DataBaseConnectionVerification;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory; // Correct import
 
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class EmployeeMainMenuController implements Initializable {
@@ -22,8 +20,6 @@ public class EmployeeMainMenuController implements Initializable {
     private LineChart lineChart;
     XYChart.Series series = new XYChart.Series();
     private String sts="Приостановлен";
-    @FXML
-    private Tab contract;
 
     @FXML
     private TableView<Contracts> contracts;
@@ -60,7 +56,7 @@ public class EmployeeMainMenuController implements Initializable {
 
     @FXML
     protected void upDateTable() {
-        ObservableList<Contracts> list = FXCollections.observableArrayList();
+        ObservableList<Contracts> list;
         DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
 
         list = DB.getContacts(sts);
@@ -88,7 +84,7 @@ public class EmployeeMainMenuController implements Initializable {
             agreeButtonColumn.setCellValueFactory(param -> new SimpleBooleanProperty(true).asObject());
             disagreeButtonColumn.setCellValueFactory(param -> new SimpleBooleanProperty(true).asObject());
 
-            agreeButtonColumn.setCellFactory(param -> new TableCell<Contracts, Boolean>() {
+            agreeButtonColumn.setCellFactory(param -> new TableCell<>() {
                 final Button agreeButton = new Button("Agree");
 
                 {
@@ -112,8 +108,8 @@ public class EmployeeMainMenuController implements Initializable {
                 }
             });
 
-            disagreeButtonColumn.setCellFactory(param -> new TableCell<Contracts, Boolean>() {
-                final Button disagreeButton = new Button("Disagree"); 
+            disagreeButtonColumn.setCellFactory(param -> new TableCell<>() {
+                final Button disagreeButton = new Button("Disagree");
 
                 {
                     disagreeButton.setOnAction(event -> {

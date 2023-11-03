@@ -24,13 +24,12 @@ public class DataBaseConnectionVerification {
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
      */
-    private boolean CheckUserExist(String table,String column,String value) {
-        PreparedStatement psCheckUserExist = null;
-        PreparedStatement psCheckUsersPassword = null;
-        ResultSet resultSet = null;
+    private boolean CheckUserExist(String table, String value) {
+        PreparedStatement psCheckUserExist;
+        ResultSet resultSet;
         try {
             connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
-            psCheckUserExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?");
+            psCheckUserExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + "email" + " = ?");
 
             psCheckUserExist.setString(1, value);
 
@@ -44,23 +43,23 @@ public class DataBaseConnectionVerification {
     /*
     Actually same method but it's get x2 more values to find user by email and password(id etc)
     */
-    private boolean CheckPassword(String table,String emailOrID,String value1,String passwordOrID,String value2){
+    private boolean CheckPassword(String table, String value1, String value2){
 
-            PreparedStatement psCheckUsersPassword=null;
-            PreparedStatement findIDbyEmail=null;
-            ResultSet resultSet=null;
-            ResultSet resultSet1=null;
+            PreparedStatement psCheckUsersPassword;
+            PreparedStatement findIDbyEmail;
+            ResultSet resultSet;
+            ResultSet resultSet1;
             try{
                 connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
-                findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+emailOrID+" = ?");
+                findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+ "email" +" = ?");
                 findIDbyEmail.setString(1,value1);
                 resultSet=findIDbyEmail.executeQuery();
                 if(resultSet.next()){
                     client_id=resultSet.getInt("ID");
-                    psCheckUsersPassword=connection.prepareStatement("SELECT "+passwordOrID+" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
+                    psCheckUsersPassword=connection.prepareStatement("SELECT "+ "password" +" FROM "+table+" WHERE ID= "+resultSet.getInt("ID"));
                     resultSet1=psCheckUsersPassword.executeQuery();
                     if(resultSet1.next()){
-                        if( value2.equals(resultSet1.getString("password")) ) return  true;
+                        return value2.equals(resultSet1.getString("password"));
                     }
                 }
 
@@ -75,11 +74,9 @@ public class DataBaseConnectionVerification {
     Method to LogIn user. First of all method check does user exist in DB and if not than take data's into DB
     */
     public void LogInUser(String name, String surname, String lastname, String number, LocalDate birthday, String email,String password){
-        PreparedStatement psInset=null;
-        PreparedStatement psCheckUserExist=null;
-        PreparedStatement InsertDataToDB=null;
-        int resultSet;
-        if(!CheckUserExist("client","email",email)){
+        PreparedStatement InsertDataToDB;
+
+        if(!CheckUserExist("client", email)){
 
             try{
                 connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
@@ -92,7 +89,7 @@ public class DataBaseConnectionVerification {
                 InsertDataToDB.setString(5,email);
                 InsertDataToDB.setString(6,password);
                 InsertDataToDB.setString(7,number);
-                resultSet=InsertDataToDB.executeUpdate();
+                InsertDataToDB.executeUpdate();
                 InsertDataToDB.close();
 
             }
@@ -108,9 +105,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement UpdateNewData=null;
 
         String newDate=String.valueOf(birthday);
-        int resultSet;
-        System.out.println(name.getClass());
-        if(!CheckUserExist("employee","email",email)){
+        if(!CheckUserExist("employee", email)){
             try{
                 connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
                 UpdateNewData = connection.prepareStatement("UPDATE employee SET " +
@@ -141,17 +136,15 @@ public class DataBaseConnectionVerification {
         PreparedStatement psCheckUserExist=null;
         PreparedStatement psCheckUsersPassword=null;
 
-        ResultSet resultSet=null;
-
 
         try{
             connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
 
-            boolean client=CheckUserExist("client","email",email);
-            employee=CheckUserExist("employee","email",email);
+            boolean client=CheckUserExist("client", email);
+            employee=CheckUserExist("employee", email);
             if(client||employee){
 
-                if(CheckPassword("client","email",email,"password",password)||CheckPassword("employee","email",email,"password",password)){
+                if(CheckPassword("client", email, password)||CheckPassword("employee", email, password)){
 
                     if(psCheckUserExist!=null) psCheckUserExist.close();
 
@@ -177,7 +170,7 @@ public class DataBaseConnectionVerification {
 
 
     public void SetNewContract(int validality,int cost,int payout,int type_of_insurance){
-        PreparedStatement InsertNewContract=null;
+        PreparedStatement InsertNewContract;
         System.out.println(client_id);
 
         try {
@@ -190,7 +183,6 @@ public class DataBaseConnectionVerification {
 
             InsertNewContract.setInt(1,client_id);
             // Assuming now is your LocalDateTime
-            String formattedDate = dtf.format(now);
             InsertNewContract.setDate(2, java.sql.Date.valueOf(now.toLocalDate()));
             // Extract the "yyyy-MM-dd" part
             InsertNewContract.setInt(3,validality);
@@ -334,13 +326,6 @@ public class DataBaseConnectionVerification {
             throw new RuntimeException(e);
         } finally {
             // Close resources in a finally block
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
             if (UpdateData != null) {
                 try {
                     UpdateData.close();
@@ -362,7 +347,6 @@ public class DataBaseConnectionVerification {
     @FXML
     protected void DeleteContract(int id) {
         PreparedStatement DeleteData = null;
-        ResultSet resultSet = null;
 
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC")) {
 
@@ -377,13 +361,6 @@ public class DataBaseConnectionVerification {
             throw new RuntimeException(e);
         } finally {
             // Close resources in a final block
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
             if (DeleteData != null) {
                 try {
                     DeleteData.close();
