@@ -356,40 +356,237 @@ public class DataBaseConnectionVerification {
                 }
             }
 
+        }
+
     }
+    @FXML
+    protected void DeleteContract(int id) {
+        PreparedStatement DeleteData = null;
+        ResultSet resultSet = null;
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC")) {
+
+
+               DeleteData = connection.prepareStatement("DELETE FROM contracts WHERE ID= ?");
+            DeleteData.setInt(1,id);
+                DeleteData.executeUpdate();
 
 
 
-
-/*
-    public  Object[] getStatistic(Date start_date,Date end_date){
-        PreparedStatement getDataOfInsuranceType=null;
-        ResultSet resultSet=null;
-        Object[] dataOfIT=new Object[7];
-        try{
-            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
-            getDataOfInsuranceType=connection.prepareStatement("SELECT * FROM contracts WHERE ID = "+insurance_id);
-            resultSet=getDataOfInsuranceType.executeQuery();
-            if(resultSet.next()){
-                dataOfIT[0]=resultSet.getString("insurance_name");
-                dataOfIT[1]=resultSet.getString("description");
-                dataOfIT[2]=resultSet.getInt("min_duration");
-                dataOfIT[3]=resultSet.getInt("max_duration");
-                dataOfIT[4]=resultSet.getInt("min_coverage");
-                dataOfIT[5]=resultSet.getInt("max_coverage");
-                dataOfIT[6]=resultSet.getInt("base_price");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a final block
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (DeleteData != null) {
+                try {
+                    DeleteData.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
-
         }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return dataOfIT;
     }
-*/
+        public Object[] getInsuranceStatistics( String startDate, String endDate) {
+        Object[] statistics = new Object[8]; // An array to store the statistics
 
-}}
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC");
+            // Calculate the number of active contracts
+            int activeContracts = calculateActiveContracts(connection);
+
+            // Calculate the number of completed contracts
+            int completedContracts = calculateCompletedContracts(connection);
+
+            // Calculate the number of suspended contracts
+            int suspendedContracts = calculateSuspendedContracts(connection);
+
+            // Calculate profit or loss
+            int profitLoss = calculateProfit(connection, startDate, endDate);
+
+            // Calculate the number of customers
+            int numCustomers = calculateNumberOfCustomers(connection);
+
+            // Calculate the number of employees
+            int numEmployees = calculateNumberOfEmployees(connection);
+
+            // Calculate the ratio of customers to contracts
+            int customerToContractRatio = numCustomers / (activeContracts + completedContracts + suspendedContracts);
+
+            // Populate the statistics array
+            statistics[0] = activeContracts + completedContracts + suspendedContracts;
+            statistics[1] = profitLoss;
+            statistics[2] = customerToContractRatio;
+            statistics[3] = numCustomers;
+            statistics[4] = numEmployees;
+            statistics[5] = numCustomers / (activeContracts + completedContracts);
+            statistics[6]=activeContracts;
+            statistics[7]=completedContracts;
+            statistics[8]=suspendedContracts;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return statistics;
+    }
+
+    private int calculateActiveContracts(Connection connection) {
+        int activeContracts = 0;
+        try {
+            String query = "SELECT COUNT(*) FROM contracts WHERE status = 'Активен' ";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                activeContracts = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activeContracts;
+    }
+
+    private int calculateCompletedContracts(Connection connection) {
+        int completedContracts = 0;
+        try {
+            String query = "SELECT COUNT(*) FROM contracts WHERE status = 'Завершен' ";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                completedContracts = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return completedContracts;
+    }
+
+    private int calculateSuspendedContracts(Connection connection) {
+        int suspendedContracts = 0;
+        try {
+            String query = "SELECT COUNT(*) FROM contracts WHERE status = 'Приостановлен' ";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                suspendedContracts = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return suspendedContracts;
+    }
+
+    private int calculateProfit(Connection connection, String startDate, String endDate) {
+        int profitLoss = 0;
+        try {
+            String query = "SELECT SUM(cost) FROM contracts WHERE start_date BETWEEN ? AND ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                profitLoss = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return profitLoss;
+    }
+
+    private int calculateNumberOfCustomers(Connection connection) {
+        int numCustomers = 0;
+        try {
+            String query = "SELECT COUNT(DISTINCT client_id) FROM contracts";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                numCustomers = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numCustomers;
+    }
+
+    private int calculateNumberOfEmployees(Connection connection) {
+        int numEmployees = 0;
+        try {
+            String query = "SELECT COUNT(DISTINCT employee_id) FROM contracts";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                numEmployees = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numEmployees;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 Необходимо передавать Stage каждый раз при необходимости перейти на новую страницу
 

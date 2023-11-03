@@ -58,7 +58,6 @@ public class EmployeeMainMenuController implements Initializable {
     private TableColumn<Contracts, Boolean> disagreeButtonColumn;
 
 
-
     @FXML
     protected void upDateTable() {
         ObservableList<Contracts> list = FXCollections.observableArrayList();
@@ -119,8 +118,9 @@ public class EmployeeMainMenuController implements Initializable {
                 {
                     disagreeButton.setOnAction(event -> {
                         Contracts contract = getTableView().getItems().get(getIndex());
-                        // Handle the "Disagree" button click here for the specific contract.
-                        System.out.println("Disagreed with contract ID: " + contract.getId());
+                        DB.DeleteContract(contract.getId());
+
+                        upDateTable();
                     });
                 }
 
