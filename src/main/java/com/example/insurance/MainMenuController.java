@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -89,7 +90,10 @@ public class MainMenuController implements Initializable{
         int term=Integer.parseInt(textField.getText());
         int coverage=Integer.parseInt(label.getText());
         DB.SetNewContract(term,coverage,term*base_price+coverage,id);
-        System.out.println("It works");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Заявка успешно подана");
+        alert.setTitle("Ожидайте подтверждение Вашей заявки сотрудником компании!\nСпасибо за то, что выбрали UnionInsurance");
+        alert.show();
 
     }
 

@@ -19,8 +19,9 @@ public class DataBaseConnectionVerification {
     Connection connection;
     public static int client_id;
     public static  boolean employee;
-
-
+    private String url="jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485";
+    private String userName="sql11657485";
+    private String passwords="fePiZmiwKC";
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
      */
@@ -28,7 +29,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement psCheckUserExist;
         ResultSet resultSet;
         try {
-            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            connection=DriverManager.getConnection(url,userName,passwords);
             psCheckUserExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + "email" + " = ?");
 
             psCheckUserExist.setString(1, value);
@@ -50,7 +51,7 @@ public class DataBaseConnectionVerification {
             ResultSet resultSet;
             ResultSet resultSet1;
             try{
-                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+                connection=DriverManager.getConnection(url,userName,passwords);
                 findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+ "email" +" = ?");
                 findIDbyEmail.setString(1,value1);
                 resultSet=findIDbyEmail.executeQuery();
@@ -79,7 +80,7 @@ public class DataBaseConnectionVerification {
         if(!CheckUserExist("client", email)){
 
             try{
-                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+                connection=DriverManager.getConnection(url,userName,passwords);
                 InsertDataToDB=connection.prepareStatement("INSERT INTO client ( first_name, second_name, last_name, date_of_birth, email, password,phone_number) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 InsertDataToDB.setString(1,name);
@@ -107,7 +108,7 @@ public class DataBaseConnectionVerification {
         String newDate=String.valueOf(birthday);
         if(!CheckUserExist("employee", email)){
             try{
-                connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+                connection=DriverManager.getConnection(url,userName,passwords);
                 UpdateNewData = connection.prepareStatement("UPDATE employee SET " +
                         "first_name = '" + name + "', " +
                         "second_name = '" + surname + "', " +
@@ -138,7 +139,7 @@ public class DataBaseConnectionVerification {
 
 
         try{
-            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            connection=DriverManager.getConnection(url,userName,passwords);
 
             boolean client=CheckUserExist("client", email);
             employee=CheckUserExist("employee", email);
@@ -174,7 +175,7 @@ public class DataBaseConnectionVerification {
         System.out.println(client_id);
 
         try {
-            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            connection=DriverManager.getConnection(url,userName,passwords);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime end_date=now.plusDays(validality);
@@ -218,7 +219,7 @@ public class DataBaseConnectionVerification {
         ResultSet resultSet=null;
         Object[] dataOfIT=new Object[7];
         try{
-            connection=DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485","sql11657485","fePiZmiwKC");
+            connection=DriverManager.getConnection(url,userName,passwords);
             getDataOfInsuranceType=connection.prepareStatement("SELECT * FROM insurancetypes WHERE ID = "+insurance_id);
             resultSet=getDataOfInsuranceType.executeQuery();
             if(resultSet.next()){
@@ -245,7 +246,7 @@ public class DataBaseConnectionVerification {
         if(status == null) status ="Приостановлен";
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC");
+            connection = DriverManager.getConnection(url, userName, passwords);
             getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality, \n" +
                     "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status, \n" +
                     "    insurancetypes.insurance_name AS name \n" +
@@ -303,7 +304,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement UpdateData = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC")){
+        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
 
 
             UpdateData= connection.prepareStatement("UPDATE contracts " +
@@ -348,7 +349,7 @@ public class DataBaseConnectionVerification {
     protected void DeleteContract(int id) {
         PreparedStatement DeleteData = null;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC")) {
+        try (Connection connection = DriverManager.getConnection(url, userName, passwords)) {
 
 
                DeleteData = connection.prepareStatement("DELETE FROM contracts WHERE ID= ?");
@@ -378,11 +379,11 @@ public class DataBaseConnectionVerification {
 
         }
     }
-        public Object[] getInsuranceStatistics( String startDate, String endDate) {
-        Object[] statistics = new Object[8]; // An array to store the statistics
+        public int[] getInsuranceStatistics( String startDate, String endDate) {
+        int[] statistics = new int[9]; // An array to store the statistics
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485", "sql11657485", "fePiZmiwKC");
+            Connection connection = DriverManager.getConnection(url, userName, passwords);
             // Calculate the number of active contracts
             int activeContracts = calculateActiveContracts(connection);
 
@@ -401,19 +402,23 @@ public class DataBaseConnectionVerification {
             // Calculate the number of employees
             int numEmployees = calculateNumberOfEmployees(connection);
 
-            // Calculate the ratio of customers to contracts
+            // Calczulate the ratio of customers to contracts
             int customerToContractRatio = numCustomers / (activeContracts + completedContracts + suspendedContracts);
 
             // Populate the statistics array
             statistics[0] = activeContracts + completedContracts + suspendedContracts;
             statistics[1] = profitLoss;
             statistics[2] = customerToContractRatio;
+
             statistics[3] = numCustomers;
             statistics[4] = numEmployees;
+
             statistics[5] = numCustomers / (activeContracts + completedContracts);
             statistics[6]=activeContracts;
             statistics[7]=completedContracts;
             statistics[8]=suspendedContracts;
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -509,7 +514,7 @@ public class DataBaseConnectionVerification {
     private int calculateNumberOfCustomers(Connection connection) {
         int numCustomers = 0;
         try {
-            String query = "SELECT COUNT(DISTINCT client_id) FROM contracts";
+            String query = "SELECT COUNT(*) FROM client";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet resultSet = statement.executeQuery();
@@ -529,7 +534,7 @@ public class DataBaseConnectionVerification {
     private int calculateNumberOfEmployees(Connection connection) {
         int numEmployees = 0;
         try {
-            String query = "SELECT COUNT(DISTINCT employee_id) FROM contracts";
+            String query = "SELECT COUNT(*) FROM employee";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet resultSet = statement.executeQuery();

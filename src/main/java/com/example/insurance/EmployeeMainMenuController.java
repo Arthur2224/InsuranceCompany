@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -18,9 +15,29 @@ import java.util.ResourceBundle;
 public class EmployeeMainMenuController implements Initializable {
     @FXML
     private LineChart lineChart;
-    XYChart.Series series = new XYChart.Series();
+    @FXML
+    private Label clearProfit;
+    @FXML
+    private Label insuranceEventLose;
+    @FXML
+    private Label profit;
+    @FXML
+    private Label employee;
+    @FXML
+    private Label clients;
+    @FXML
+    private Label clientsPerContract;
+    @FXML
+    private Label ActiveContracts;
+    @FXML
+    private Label PausedContracts;
+    @FXML
+    private Label PassedContracts;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
     private String sts="Приостановлен";
-
     @FXML
     private TableView<Contracts> contracts;
 
@@ -155,4 +172,29 @@ public class EmployeeMainMenuController implements Initializable {
        upDateTable();
 
     }
+    @FXML
+    protected void getStatistic(){
+        if(startDate.getValue()==null||endDate.getValue()==null)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Введите данные во все поля!");
+
+            alert.setTitle("Данные не введены во все поля");
+            alert.show();
+        }
+        else
+        {
+        DataBaseConnectionVerification DB=new DataBaseConnectionVerification();
+        int[] stat=DB.getInsuranceStatistics(String.valueOf( startDate.getValue()),String.valueOf(endDate.getValue()));
+        clients.setText(String.valueOf( stat[3]));
+        employee.setText(String.valueOf( stat[4]));
+        clientsPerContract.setText(String.valueOf( stat[2]));
+        insuranceEventLose.setText(String.valueOf( stat[1]));
+        ActiveContracts.setText(String.valueOf( stat[6]));
+        PausedContracts.setText(String.valueOf( stat[8]));
+        PassedContracts.setText((String.valueOf( stat[7])));
+        }
+    }
+
+
 }
