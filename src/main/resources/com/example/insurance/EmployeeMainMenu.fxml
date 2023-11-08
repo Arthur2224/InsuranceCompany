@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.EmployeeMainMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.insurance.EmployeeMainMenuController">
    <top>
-      <Pane prefHeight="96.0" prefWidth="1280.0" visible="false" BorderPane.alignment="CENTER" />
+      <AnchorPane maxHeight="64.0" prefHeight="64.0" prefWidth="1280.0" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="66.0" prefWidth="1249.0" spacing="750.0">
+               <children>
+                  <Label prefHeight="59.0" prefWidth="383.0" text="UNIONINSURANCE">
+                     <font>
+                        <Font name="OCR A Extended" size="44.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="exitButton" minWidth="0.0" mnemonicParsing="false" onAction="#getOut" prefHeight="66.0" prefWidth="78.0" style="-fx-background-color: null;">
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@exit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
    </top>
    <center>
-      <TabPane prefHeight="616.0" prefWidth="1280.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="66.0" tabMaxWidth="200.0" tabMinHeight="66.0" tabMinWidth="200.0" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="648.0" prefWidth="1280.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="66.0" tabMaxWidth="200.0" tabMinHeight="66.0" tabMinWidth="200.0" BorderPane.alignment="CENTER">
          <tabs>
             <Tab style="-fx-background-color: null;" text="Формирование отчета">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
-                        <LineChart fx:id="lineChart" layoutX="14.0" layoutY="28.0" prefHeight="380.0" prefWidth="496.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <DatePicker fx:id="startDate" editable="false" layoutX="69.0" layoutY="400.0" promptText="Начало" showWeekNumbers="true" />
-                        <DatePicker fx:id="endDate" editable="false" layoutX="69.0" layoutY="446.0" promptText="Конец" showWeekNumbers="true" />
-                        <Button layoutX="288.0" layoutY="425.0" mnemonicParsing="false" onAction="#getStatistic" text="Получить статистику" />
-                        <GridPane layoutX="516.0" layoutY="28.0" prefHeight="357.0" prefWidth="714.0">
+                        <DatePicker fx:id="startDate" editable="false" layoutX="55.0" layoutY="411.0" promptText="Начало" showWeekNumbers="true" />
+                        <DatePicker fx:id="endDate" editable="false" layoutX="55.0" layoutY="447.0" promptText="Конец" showWeekNumbers="true" />
+                        <Button layoutX="58.0" layoutY="493.0" mnemonicParsing="false" onAction="#getStatistic" text="Получить статистику" />
+                        <GridPane layoutX="55.0" layoutY="43.0" prefHeight="357.0" prefWidth="714.0" style="-fx-border-color: #301c94; -fx-border-width: 4px; -fx-inner-border-color: blue;">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="215.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
@@ -52,53 +54,61 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="clearProfit" prefHeight="17.0" prefWidth="161.0">
+                              <Label fx:id="clearProfit" prefHeight="17.0" prefWidth="231.0">
                                  <graphic>
-                                    <Label prefHeight="17.0" prefWidth="102.0" text="Чистая прибыль" />
+                                    <Label prefHeight="18.0" prefWidth="115.0" text="Чистая прибыль:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="insuranceEventLose" prefHeight="17.0" prefWidth="263.0" GridPane.columnIndex="1">
                                  <graphic>
-                                    <Label text="Страховые выплаты" />
+                                    <Label text="Страховые выплаты:" />
                                  </graphic>
                               </Label>
-                              <Label fx:id="profit" prefHeight="17.0" prefWidth="101.0" GridPane.columnIndex="2">
+                              <Label fx:id="profit" prefHeight="17.0" prefWidth="190.0" GridPane.columnIndex="2">
                                  <graphic>
-                                    <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="54.0" text="Прибыль" />
+                                    <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="69.0" text="Прибыль:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="employee" prefHeight="17.0" prefWidth="161.0" GridPane.rowIndex="1">
                                  <graphic>
-                                    <Label text="Сотрудники" />
+                                    <Label text="Сотрудники:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="clients" prefHeight="17.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <graphic>
-                                    <Label prefHeight="17.0" prefWidth="54.0" text="Клиенты" />
+                                    <Label prefHeight="18.0" prefWidth="90.0" text="Клиенты:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="clientsPerContract" prefHeight="17.0" prefWidth="173.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <graphic>
-                                    <Label text="Клиент/договор" />
+                                    <Label text="Клиент/договор:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="ActiveContracts" prefHeight="17.0" prefWidth="149.0" GridPane.rowIndex="2">
                                  <graphic>
-                                    <Label text="Активные договоры" />
+                                    <Label text="Активные договоры:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="PassedContracts" prefHeight="17.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <graphic>
-                                    <Label text="Завершенные" />
+                                    <Label text="Завершенные:" />
                                  </graphic>
                               </Label>
                               <Label fx:id="PausedContracts" prefHeight="17.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <graphic>
-                                    <Label text="Приостановленные" />
+                                    <Label text="Приостановленные:" />
                                  </graphic>
                               </Label>
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
                         </GridPane>
+                     
+
                      </children>
                   </AnchorPane>
                </content>

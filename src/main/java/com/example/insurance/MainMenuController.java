@@ -1,14 +1,20 @@
 package com.example.insurance;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import org.controlsfx.property.BeanPropertyUtils;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +23,10 @@ import static java.lang.Integer.parseInt;
 
 public class MainMenuController implements Initializable{
     DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
+    public static int selectedContractId;
     private boolean employee;
+    @FXML
+    private Button exitButton;
     @FXML
     public Label TipForterm_auto;
     @FXML
@@ -68,6 +77,21 @@ public class MainMenuController implements Initializable{
     public  int termInt;
     private Tab currentTab;
 
+    @FXML
+    private TableColumn<Contracts, Integer> id;
+    @FXML
+    private TableColumn<Contracts, String> start_date;
+    @FXML
+    private TableColumn<Contracts, String> validality;
+    @FXML
+    private TableColumn<Contracts, String> status;
+    @FXML
+    private TableColumn<Contracts, String> type;
+    @FXML
+    private TableColumn<Contracts, Boolean> agreeButtonColumn;
+
+    @FXML
+    private TableView<Contracts> contracts;
     @FXML
     protected void setNewContract(){
         DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
@@ -231,5 +255,92 @@ public class MainMenuController implements Initializable{
 
         currentTab = null;
 
+        upDateTable();
+
+    }
+
+    @FXML
+    protected void getOut(){
+        try {
+            // Load the new scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+            Parent root = loader.load();
+
+            // Create the stage and set the new scene
+            Stage stage = (Stage) exitButton.getScene().getWindow();
+            Scene scene = new Scene(root,1280,720);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    public void upDateTable() {
+
+        ObservableList<Contracts> list;
+        DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
+
+        list = DB.getContactsForClient();
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
+        validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        // Set cell factories for the "Agree" and "Disagree" columns
+        agreeButtonColumn.setCellValueFactory(param -> new SimpleBooleanProperty(true).asObject());
+
+
+        agreeButtonColumn.setCellFactory(param -> new TableCell<>() {
+            final Button agreeButton = new Button("Страховой случай");
+
+            {
+                agreeButton.setOnAction(event -> {
+                    Contracts contract = getTableView().getItems().get(getIndex());
+
+                    selectedContractId= contract.getId();
+                    System.out.println(selectedContractId);
+
+                    getInsuranceEventFromClient();
+
+                });
+            }
+
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(agreeButton);
+                }
+            }
+        });
+
+
+
+
+        contracts.setItems(list);
+    }
+
+
+    public void getInsuranceEventFromClient(){
+        try {
+            Parent parent=FXMLLoader.load(getClass().getResource("addInsuranceEvent.fxml"));
+            Scene scene=new Scene(parent);
+            Stage stage =new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+    public static int getSelectedId(){
+        return selectedContractId;
     }
 }

@@ -272,7 +272,7 @@ public class DataBaseConnectionVerification {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            // Close resources in a finally block
+            // Close resources in a final block
             if (resultSet != null) {
                 try {
                     resultSet.close();
@@ -326,7 +326,99 @@ public class DataBaseConnectionVerification {
         catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            // Close resources in a finally block
+            // Close resources in a final block
+            if (UpdateData != null) {
+                try {
+                    UpdateData.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+
+    }
+    @FXML
+    protected void PauseContract(int id){
+        PreparedStatement UpdateData = null;
+        ResultSet resultSet = null;
+
+        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
+
+
+            UpdateData= connection.prepareStatement("UPDATE contracts " +
+                    "SET " +
+                    "status = 'Приостановлен' " +
+                    "WHERE ID = ?");
+            // Set the values for each placeholder in the PreparedStatement
+            UpdateData.setInt(1, id);
+
+
+            int rowsUpdated = UpdateData.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Update successful.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a final block
+            if (UpdateData != null) {
+                try {
+                    UpdateData.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+
+    }
+    @FXML
+    protected void NewInsuranceEvent(int id,String description){
+        PreparedStatement UpdateData = null;
+        ResultSet resultSet = null;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
+
+
+            UpdateData = connection.prepareStatement("INSERT INTO insuranceevent " +
+                    "(contract_id, description, date_of_event) " +
+                    "VALUES (?, ?, ?)");
+
+            UpdateData.setInt(1, id);
+            UpdateData.setString(2, description);
+            UpdateData.setDate(3,java.sql.Date.valueOf(now.toLocalDate()));
+
+
+            int rowsUpdated = UpdateData.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Update successful.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a final block
             if (UpdateData != null) {
                 try {
                     UpdateData.close();
@@ -380,13 +472,14 @@ public class DataBaseConnectionVerification {
         }
     }
         public int[] getInsuranceStatistics( String startDate, String endDate) {
-        int[] statistics = new int[9]; // An array to store the statistics
+        int[] statistics = new int[10]; // An array to store the statistics
 
         try {
+
             Connection connection = DriverManager.getConnection(url, userName, passwords);
             // Calculate the number of active contracts
             int activeContracts = calculateActiveContracts(connection);
-
+            int profitLoosses= calculateLoosses(connection,startDate,endDate);
             // Calculate the number of completed contracts
             int completedContracts = calculateCompletedContracts(connection);
 
@@ -394,7 +487,7 @@ public class DataBaseConnectionVerification {
             int suspendedContracts = calculateSuspendedContracts(connection);
 
             // Calculate profit or loss
-            int profitLoss = calculateProfit(connection, startDate, endDate);
+            int profit = calculateProfit(connection, startDate, endDate);
 
             // Calculate the number of customers
             int numCustomers = calculateNumberOfCustomers(connection);
@@ -402,12 +495,12 @@ public class DataBaseConnectionVerification {
             // Calculate the number of employees
             int numEmployees = calculateNumberOfEmployees(connection);
 
-            // Calczulate the ratio of customers to contracts
+            // Calculate the ratio of customers to contracts
             int customerToContractRatio = numCustomers / (activeContracts + completedContracts + suspendedContracts);
 
             // Populate the statistics array
             statistics[0] = activeContracts + completedContracts + suspendedContracts;
-            statistics[1] = profitLoss;
+            statistics[1] = profit;
             statistics[2] = customerToContractRatio;
 
             statistics[3] = numCustomers;
@@ -417,7 +510,7 @@ public class DataBaseConnectionVerification {
             statistics[6]=activeContracts;
             statistics[7]=completedContracts;
             statistics[8]=suspendedContracts;
-
+            statistics[9]=profitLoosses;
 
 
         } catch (SQLException e) {
@@ -550,6 +643,90 @@ public class DataBaseConnectionVerification {
         }
         return numEmployees;
     }
+
+    private int calculateLoosses(Connection connection, String startDate, String endDate) {
+        int profitLoss = 0;
+        try {
+            String query = "SELECT SUM(contracts.payout),contracts.ID,insuranceevent.ID FROM contracts JOIN insuranceevent "+
+                    "ON contracts.ID=insuranceevent.contract_ID WHERE insuranceevent.date_of_event BETWEEN ? AND ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                profitLoss = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return profitLoss;
+    }
+
+
+    public ObservableList<Contracts> getContactsForClient() {
+        PreparedStatement getContracts = null;
+        ResultSet resultSet = null;
+        ObservableList<Contracts> contracts = FXCollections.observableArrayList();
+
+
+        try {
+            connection = DriverManager.getConnection(url, userName, passwords);
+            getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.client_id, contracts.start_date, contracts.validality, \n" +
+                    "   contracts.type_of_insurance, contracts.status \n" +
+                    "FROM contracts \n " +
+                    "WHERE contracts.client_id = ? AND contracts.status = 'Активен' ");
+            getContracts.setInt(1,client_id);
+            resultSet = getContracts.executeQuery();
+
+            while (resultSet.next()) {
+                Contracts contracts1 = new Contracts();
+                contracts1.setId(resultSet.getInt("contracts.ID"));
+
+                contracts1.setStart_date(resultSet.getString("contracts.start_date"));
+                contracts1.setValidality(resultSet.getInt("contracts.validality"));
+                contracts1.setStatus(resultSet.getString("contracts.status"));
+
+                contracts.add(contracts1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close resources in a final block
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (getContracts != null) {
+                try {
+                    getContracts.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return contracts; // Return the populated list
+    }
+
+
+
+
+
 }
 
 
@@ -569,8 +746,3 @@ public class DataBaseConnectionVerification {
 
 
 
-/*
-Необходимо передавать Stage каждый раз при необходимости перейти на новую страницу
-
-
- */
