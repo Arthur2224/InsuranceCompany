@@ -21,7 +21,6 @@ public class addInsuranceEventController {
 
         if(!description.getText().isEmpty()){
             DataBaseConnectionVerification DBC=new DataBaseConnectionVerification();
-            System.out.println(MMC.getSelectedId()+" yes Sir");
             DBC.NewInsuranceEvent(MMC.getSelectedId(),description.getText());
             DBC.PauseContract(MMC.getSelectedId());
             Stage stage = (Stage) description.getScene().getWindow();

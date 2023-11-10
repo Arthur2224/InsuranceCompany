@@ -276,54 +276,56 @@ public class MainMenuController implements Initializable{
         }
 
     }
-    @FXML
-    public void upDateTable() {
+        @FXML
+        public void upDateTable() {
 
-        ObservableList<Contracts> list;
-        DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
+            ObservableList<Contracts> list;
+            DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
+            list = DB.getContactsForClient();
 
-        list = DB.getContactsForClient();
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
-        validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
-        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+            id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
+            validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
+            status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // Set cell factories for the "Agree" and "Disagree" columns
-        agreeButtonColumn.setCellValueFactory(param -> new SimpleBooleanProperty(true).asObject());
+            agreeButtonColumn.setCellValueFactory(param -> new SimpleBooleanProperty(true).asObject());
 
+            agreeButtonColumn.setCellFactory(param -> new TableCell<>() {
+                final Button agreeButton = new Button("Страховой случай");
 
-        agreeButtonColumn.setCellFactory(param -> new TableCell<>() {
-            final Button agreeButton = new Button("Страховой случай");
+                {
+                    agreeButton.setOnAction(event -> {
+                        Contracts contract = getTableView().getItems().get(getIndex());
 
-            {
-                agreeButton.setOnAction(event -> {
-                    Contracts contract = getTableView().getItems().get(getIndex());
+                        selectedContractId= contract.getId();
+                        System.out.println(selectedContractId);
 
-                    selectedContractId= contract.getId();
-                    System.out.println(selectedContractId);
+                        getInsuranceEventFromClient();
 
-                    getInsuranceEventFromClient();
-
-                });
-            }
-
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(agreeButton);
+                    });
                 }
-            }
-        });
+
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(agreeButton);
+                    }
+                }
+            });
 
 
 
 
-        contracts.setItems(list);
-    }
+            contracts.setItems(list);}
+
+
+
+
+
 
 
     public void getInsuranceEventFromClient(){

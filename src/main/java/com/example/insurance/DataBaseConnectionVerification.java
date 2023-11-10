@@ -247,12 +247,13 @@ public class DataBaseConnectionVerification {
 
         try {
             connection = DriverManager.getConnection(url, userName, passwords);
-            getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality, \n" +
-                    "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status, \n" +
-                    "    insurancetypes.insurance_name AS name \n" +
-                    "FROM contracts \n " +
-                    "JOIN insurancetypes ON contracts.type_of_insurance = insurancetypes.ID\n"+
-                    "WHERE contracts.status = ?");
+            getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality,\n" +
+                    "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status,\n" +
+                    "    insurancetypes.insurance_name AS name, insuranceevent.contract_ID\n" +
+                    "FROM contracts\n" +
+                    "JOIN insurancetypes ON contracts.type_of_insurance = insurancetypes.ID\n" +
+                    "LEFT JOIN insuranceevent ON contracts.ID = insuranceevent.contract_ID\n" +
+                    "WHERE contracts.status = ? AND insuranceevent.contract_ID IS NULL;\n");
             getContracts.setString(1,status);
             resultSet = getContracts.executeQuery();
 
@@ -725,7 +726,55 @@ public class DataBaseConnectionVerification {
 
 
 
+    public ObservableList<Contracts> getInsuranceEventContacts() {
+        PreparedStatement getContracts = null;
+        ResultSet resultSet = null;
+        ObservableList<Contracts> contracts = FXCollections.observableArrayList();
 
+
+        try {
+            connection = DriverManager.getConnection(url, userName, passwords);
+            getContracts = connection.prepareStatement("SELECT * FROM `insuranceevent`");
+
+            resultSet = getContracts.executeQuery();
+
+            while (resultSet.next()) {
+                Contracts contracts1 = new Contracts();
+                contracts1.setId(resultSet.getInt("ID"));
+                contracts1.setId_client(resultSet.getInt("contract_ID"));
+                contracts1.setStart_date(resultSet.getString("date_of_event"));
+                contracts1.setStatus(resultSet.getString(String.valueOf("description")));
+                contracts.add(contracts1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (getContracts != null) {
+                try {
+                    getContracts.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return contracts;
+    }
 
 }
 

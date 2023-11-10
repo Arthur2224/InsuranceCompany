@@ -3,8 +3,7 @@ package com.example.insurance;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +15,8 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("SignUp.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("icon0.jpg")));
+
         stage.setResizable(false);
         stage.setTitle("UnionInsurance");
         stage.setScene(scene);

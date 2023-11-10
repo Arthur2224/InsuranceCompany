@@ -79,8 +79,9 @@ public class EmployeeMainMenuController implements Initializable {
     protected void upDateTable() {
         ObservableList<Contracts> list;
         DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
-
+        if(sts!="InsuranceEvent"){
         list = DB.getContacts(sts);
+
         client.setCellValueFactory(new PropertyValueFactory<>("id_client"));
         cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -88,7 +89,14 @@ public class EmployeeMainMenuController implements Initializable {
         start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
         validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
-        type.setCellValueFactory(new PropertyValueFactory<>("type_of_insurance"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type_of_insurance"));}
+        else{
+            list=DB.getInsuranceEventContacts();
+            id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            client.setCellValueFactory(new PropertyValueFactory<>("id_clientk"));
+            start_date.setCellValueFactory(new PropertyValueFactory<>(String.valueOf( "start_date")));
+            status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        }
         if ("Приостановлен".equals(sts)) {
             if (!contracts.getColumns().contains(agreeButtonColumn)) {
                 contracts.getColumns().add(agreeButtonColumn);
@@ -217,6 +225,12 @@ public class EmployeeMainMenuController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    @FXML
+    protected void getInsuranceEventContracts(){
+
+        sts="InsuranceEvent";
+        upDateTable();
     }
 
 
