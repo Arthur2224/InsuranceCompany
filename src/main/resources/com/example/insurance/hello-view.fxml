@@ -21,7 +21,7 @@
                         <Font name="OCR A Extended" size="44.0" />
                      </font>
                   </Label>
-                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchToSignUpScene" prefHeight="76.0" prefWidth="79.0" style="-fx-background-color: null;">
+                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#switchToSignUpScene" prefHeight="76.0" prefWidth="79.0" style="-fx-background-color: null;">
                      <HBox.margin>
                         <Insets left="700.0" />
                      </HBox.margin>
@@ -137,7 +137,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </PasswordField>
-                              <Button mnemonicParsing="false" onAction="#ClearTextFields" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Очистить" GridPane.rowIndex="3">
+                              <Button mnemonicParsing="false" onAction="#clearTextFields" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Очистить" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="85.0" />
                                  </GridPane.margin>
@@ -145,11 +145,11 @@
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#TryLogIn" prefHeight="38.0" prefWidth="106.0" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Регистрация" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <Button mnemonicParsing="false" onAction="#tryLogIn" prefHeight="38.0" prefWidth="106.0" style="-fx-border-width: 4px; -fx-border-color: #301c94; -fx-background-color: null;" text="Регистрация" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Button>
-                              <TextField fx:id="EmployeeCode" onMouseExited="#DownTip" onMouseMoved="#UpTip" promptText="Код сотрудника" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #301c94; -fx-text-fill: #301c94; -fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <TextField fx:id="EmployeeCode" onMouseExited="#downTip" onMouseMoved="#upTip" promptText="Код сотрудника" style="-fx-border-width: 4px; -fx-border-color: #b0c4de; -fx-prompt-text-fill: #301c94; -fx-text-fill: #301c94; -fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </GridPane.margin>

@@ -1,6 +1,5 @@
 package com.example.insurance;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,17 +12,17 @@ import java.io.IOException;
 
 public class SignUpController {
     @FXML
-    private Button SignUp;
+    private Button signUp;
     @FXML
-    public Button TrySignUp;
+    private Button trySignUp;
     @FXML
-    private Label thinkaboutInsurance;
+    private Label tipOnSignUpPage;
     @FXML
     private TextField emailTxtField;
     @FXML
     private TextField passwordTxtField;
     @FXML
-    protected void SwitchSceneSignUp(){
+    protected void switchSceneSignUp(){
         // Load the new scene
         try {
             // Load the new scene
@@ -31,7 +30,7 @@ public class SignUpController {
             Parent root = loader.load();
 
             // Create the stage and set the new scene
-            Stage stage = (Stage) SignUp.getScene().getWindow();
+            Stage stage = (Stage) signUp.getScene().getWindow();
             Scene scene = new Scene(root,1280,720);
             stage.setScene(scene);
             stage.show();
@@ -41,20 +40,20 @@ public class SignUpController {
     }
 
     @FXML
-    protected void UpTip(){
-        thinkaboutInsurance.setOpacity(1);
+    protected void upTip(){
+        tipOnSignUpPage.setOpacity(1);
     }
     @FXML
-    protected void DownTip(){
-        thinkaboutInsurance.setOpacity(0);
+    protected void downTip(){
+        tipOnSignUpPage.setOpacity(0);
     }
     @FXML
-    protected void SignUpColorUp(){
-        TrySignUp.setStyle("-fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 70% );-fx-border-width:6px;-fx-background-color:null;-fx-border-radius:5px;-fx-font: 18 Arial;");
+    protected void signUpColorUp(){
+        trySignUp.setStyle("-fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 70% );-fx-border-width:6px;-fx-background-color:null;-fx-border-radius:5px;-fx-font: 18 Arial;");
     }
     @FXML
-    protected void SignUpColorDown(){
-        TrySignUp.setStyle("-fx-border-color:  linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% );-fx-border-width:4px;-fx-background-color:null;-fx-border-radius:0px");
+    protected void signUpColorDown(){
+        trySignUp.setStyle("-fx-border-color:  linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% );-fx-border-width:4px;-fx-background-color:null;-fx-border-radius:0px");
     }
 
     @FXML
@@ -62,7 +61,7 @@ public class SignUpController {
         DataBaseConnectionVerification dataBaseConnectionVerification = new DataBaseConnectionVerification();
 
         if (!emailTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty())
-            dataBaseConnectionVerification.signupUser((Stage) SignUp.getScene().getWindow(), emailTxtField.getText(), passwordTxtField.getText());
+            dataBaseConnectionVerification.signupUser((Stage) signUp.getScene().getWindow(), emailTxtField.getText(), passwordTxtField.getText());
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Введите данные во все поля!");

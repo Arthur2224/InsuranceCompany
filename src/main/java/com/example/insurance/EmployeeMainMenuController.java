@@ -32,11 +32,11 @@ public class EmployeeMainMenuController implements Initializable {
     @FXML
     private Label clientsPerContract;
     @FXML
-    private Label ActiveContracts;
+    private Label activeContracts;
     @FXML
-    private Label PausedContracts;
+    private Label pausedContracts;
     @FXML
-    private Label PassedContracts;
+    private Label passedContracts;
     @FXML
     private DatePicker startDate;
     @FXML
@@ -67,7 +67,7 @@ public class EmployeeMainMenuController implements Initializable {
     private TableColumn<Contracts, String> type;
 
     @FXML
-    private TableColumn<Contracts, Integer> validality;
+    private TableColumn<Contracts, Integer> validity;
     @FXML
     private TableColumn<Contracts, Boolean> agreeButtonColumn;
 
@@ -87,7 +87,7 @@ public class EmployeeMainMenuController implements Initializable {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         payout.setCellValueFactory(new PropertyValueFactory<>("payout"));
         start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
-        validality.setCellValueFactory(new PropertyValueFactory<>("validality"));
+        validity.setCellValueFactory(new PropertyValueFactory<>("validality"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         type.setCellValueFactory(new PropertyValueFactory<>("type_of_insurance"));}
         else{
@@ -202,9 +202,9 @@ public class EmployeeMainMenuController implements Initializable {
         employee.setText(String.valueOf( stat[4]));
         clientsPerContract.setText(String.valueOf( stat[2]));
         insuranceEventLose.setText(String.valueOf( stat[9]));
-        ActiveContracts.setText(String.valueOf( stat[6]));
-        PausedContracts.setText(String.valueOf( stat[8]));
-        PassedContracts.setText((String.valueOf( stat[7])));
+        activeContracts.setText(String.valueOf( stat[6]));
+        pausedContracts.setText(String.valueOf( stat[8]));
+        passedContracts.setText((String.valueOf( stat[7])));
         profit.setText(String.valueOf(stat[1]));
         clearProfit.setText(String.valueOf(stat[1]-stat[9]));
         }

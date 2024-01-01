@@ -20,7 +20,7 @@
                         <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="SignUp" mnemonicParsing="false" onAction="#SwitchSceneSignUp" prefHeight="66.0" prefWidth="148.0" style="-fx-background-color: null;">
+                  <Button fx:id="signUp" mnemonicParsing="false" onAction="#switchSceneSignUp" prefHeight="66.0" prefWidth="148.0" style="-fx-background-color: null;">
                      <graphic>
                         <ImageView fitHeight="66.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -48,7 +48,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </ImageView>
-                        <ImageView fitHeight="248.0" fitWidth="218.0" onMouseEntered="#UpTip" onMouseExited="#DownTip" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="248.0" fitWidth="218.0" onMouseEntered="#upTip" onMouseExited="#downTip" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@LoginIcons.png" />
                            </image>
@@ -79,7 +79,7 @@
                         <Insets bottom="100.0" left="155.0" right="100.0" top="100.0" />
                      </HBox.margin>
                      <children>
-                        <Button fx:id="TrySignUp" mnemonicParsing="false" onAction="#signUpUser" onMouseEntered="#SignUpColorUp" onMouseExited="#SignUpColorDown" prefHeight="38.0" prefWidth="148.0" style="-fx-background-color: null; -fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% ); -fx-border-width: 4px;" text="Войти" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="trySignUp" mnemonicParsing="false" onAction="#signUpUser" onMouseEntered="#signUpColorUp" onMouseExited="#signUpColorDown" prefHeight="38.0" prefWidth="148.0" style="-fx-background-color: null; -fx-border-color: linear-gradient(to bottom left,#b0c4de 30% ,  #301c94 30% ); -fx-border-width: 4px;" text="Войти" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="70.0" left="160.0" />
                            </GridPane.margin></Button>

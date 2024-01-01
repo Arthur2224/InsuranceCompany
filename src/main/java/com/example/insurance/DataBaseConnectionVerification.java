@@ -16,20 +16,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DataBaseConnectionVerification {
-    Connection connection;
-    public static int client_id;
-    public static  boolean employee;
-    private String url="jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485";
-    private String userName="sql11657485";
-    private String passwords="fePiZmiwKC";
+    private Connection connection;
+    private int client_id;
+
+
+
+    private  boolean employee;
+    private final String url="jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11657485";
+    private final String userName="sql11657485";
+    private final String password="fePiZmiwKC";
     /*
     CheckUserExist -- checking in selected table email and if user actually has data in DB return false
      */
+    public boolean isEmployee() {
+        return employee;
+    }
     private boolean CheckUserExist(String table, String value) {
         PreparedStatement psCheckUserExist;
         ResultSet resultSet;
         try {
-            connection=DriverManager.getConnection(url,userName,passwords);
+            connection=DriverManager.getConnection(url,userName,password);
             psCheckUserExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + "email" + " = ?");
 
             psCheckUserExist.setString(1, value);
@@ -51,7 +57,7 @@ public class DataBaseConnectionVerification {
             ResultSet resultSet;
             ResultSet resultSet1;
             try{
-                connection=DriverManager.getConnection(url,userName,passwords);
+                connection=DriverManager.getConnection(url,userName,password);
                 findIDbyEmail=connection.prepareStatement("SELECT ID FROM "+table+" WHERE "+ "email" +" = ?");
                 findIDbyEmail.setString(1,value1);
                 resultSet=findIDbyEmail.executeQuery();
@@ -80,7 +86,7 @@ public class DataBaseConnectionVerification {
         if(!CheckUserExist("client", email)){
 
             try{
-                connection=DriverManager.getConnection(url,userName,passwords);
+                connection=DriverManager.getConnection(url,userName,password);
                 InsertDataToDB=connection.prepareStatement("INSERT INTO client ( first_name, second_name, last_name, date_of_birth, email, password,phone_number) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 InsertDataToDB.setString(1,name);
@@ -108,7 +114,7 @@ public class DataBaseConnectionVerification {
         String newDate=String.valueOf(birthday);
         if(!CheckUserExist("employee", email)){
             try{
-                connection=DriverManager.getConnection(url,userName,passwords);
+                connection=DriverManager.getConnection(url,userName,password);
                 UpdateNewData = connection.prepareStatement("UPDATE employee SET " +
                         "first_name = '" + name + "', " +
                         "second_name = '" + surname + "', " +
@@ -139,7 +145,7 @@ public class DataBaseConnectionVerification {
 
 
         try{
-            connection=DriverManager.getConnection(url,userName,passwords);
+            connection=DriverManager.getConnection(url,userName,password);
 
             boolean client=CheckUserExist("client", email);
             employee=CheckUserExist("employee", email);
@@ -175,7 +181,7 @@ public class DataBaseConnectionVerification {
         System.out.println(client_id);
 
         try {
-            connection=DriverManager.getConnection(url,userName,passwords);
+            connection=DriverManager.getConnection(url,userName,password);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime end_date=now.plusDays(validality);
@@ -219,7 +225,7 @@ public class DataBaseConnectionVerification {
         ResultSet resultSet=null;
         Object[] dataOfIT=new Object[7];
         try{
-            connection=DriverManager.getConnection(url,userName,passwords);
+            connection=DriverManager.getConnection(url,userName,password);
             getDataOfInsuranceType=connection.prepareStatement("SELECT * FROM insurancetypes WHERE ID = "+insurance_id);
             resultSet=getDataOfInsuranceType.executeQuery();
             if(resultSet.next()){
@@ -246,7 +252,7 @@ public class DataBaseConnectionVerification {
         if(status == null) status ="Приостановлен";
 
         try {
-            connection = DriverManager.getConnection(url, userName, passwords);
+            connection = DriverManager.getConnection(url, userName, password);
             getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.employee_id, contracts.client_id, contracts.start_date, contracts.validality,\n" +
                     "    contracts.cost, contracts.payout, contracts.type_of_insurance, contracts.status,\n" +
                     "    insurancetypes.insurance_name AS name, insuranceevent.contract_ID\n" +
@@ -305,7 +311,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement UpdateData = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
+        try (Connection connection = DriverManager.getConnection(url, userName, password)){
 
 
             UpdateData= connection.prepareStatement("UPDATE contracts " +
@@ -351,7 +357,7 @@ public class DataBaseConnectionVerification {
         PreparedStatement UpdateData = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
+        try (Connection connection = DriverManager.getConnection(url, userName, password)){
 
 
             UpdateData= connection.prepareStatement("UPDATE contracts " +
@@ -397,7 +403,7 @@ public class DataBaseConnectionVerification {
         ResultSet resultSet = null;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
         LocalDateTime now = LocalDateTime.now();
-        try (Connection connection = DriverManager.getConnection(url, userName, passwords)){
+        try (Connection connection = DriverManager.getConnection(url, userName, password)){
 
 
             UpdateData = connection.prepareStatement("INSERT INTO insuranceevent " +
@@ -442,7 +448,7 @@ public class DataBaseConnectionVerification {
     protected void DeleteContract(int id) {
         PreparedStatement DeleteData = null;
 
-        try (Connection connection = DriverManager.getConnection(url, userName, passwords)) {
+        try (Connection connection = DriverManager.getConnection(url, userName, password)) {
 
 
                DeleteData = connection.prepareStatement("DELETE FROM contracts WHERE ID= ?");
@@ -477,7 +483,7 @@ public class DataBaseConnectionVerification {
 
         try {
 
-            Connection connection = DriverManager.getConnection(url, userName, passwords);
+            Connection connection = DriverManager.getConnection(url, userName, password);
             // Calculate the number of active contracts
             int activeContracts = calculateActiveContracts(connection);
             int profitLoosses= calculateLoosses(connection,startDate,endDate);
@@ -676,7 +682,7 @@ public class DataBaseConnectionVerification {
 
 
         try {
-            connection = DriverManager.getConnection(url, userName, passwords);
+            connection = DriverManager.getConnection(url, userName, password);
             getContracts = connection.prepareStatement("SELECT contracts.ID, contracts.client_id, contracts.start_date, contracts.validality, \n" +
                     "   contracts.type_of_insurance, contracts.status \n" +
                     "FROM contracts \n " +
@@ -733,7 +739,7 @@ public class DataBaseConnectionVerification {
 
 
         try {
-            connection = DriverManager.getConnection(url, userName, passwords);
+            connection = DriverManager.getConnection(url, userName, password);
             getContracts = connection.prepareStatement("SELECT * FROM `insuranceevent`");
 
             resultSet = getContracts.executeQuery();

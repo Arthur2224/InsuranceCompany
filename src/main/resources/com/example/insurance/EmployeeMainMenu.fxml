@@ -96,17 +96,17 @@
                                     <Label text="Клиент/договор:" />
                                  </graphic>
                               </Label>
-                              <Label fx:id="ActiveContracts" prefHeight="17.0" prefWidth="149.0" GridPane.rowIndex="2">
+                              <Label fx:id="activeContracts" prefHeight="17.0" prefWidth="149.0" GridPane.rowIndex="2">
                                  <graphic>
                                     <Label text="Активные договоры:" />
                                  </graphic>
                               </Label>
-                              <Label fx:id="PassedContracts" prefHeight="17.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Label fx:id="passedContracts" prefHeight="17.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <graphic>
                                     <Label text="Завершенные:" />
                                  </graphic>
                               </Label>
-                              <Label fx:id="PausedContracts" prefHeight="17.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <Label fx:id="pausedContracts" prefHeight="17.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <graphic>
                                     <Label text="Приостановленные:" />
                                  </graphic>
@@ -138,7 +138,7 @@
                               <TableColumn fx:id="cost" minWidth="0.0" prefWidth="95.0" text="Стоимость" />
                               <TableColumn fx:id="payout" prefWidth="75.0" text="Выплаты" />
                               <TableColumn fx:id="start_date" prefWidth="75.0" text="Дата начала" />
-                              <TableColumn fx:id="validality" prefWidth="75.0" text="Срок" />
+                              <TableColumn fx:id="validity" prefWidth="75.0" text="Срок" />
                               <TableColumn fx:id="status" prefWidth="75.0" text="Статус" />
                               <TableColumn fx:id="agreeButtonColumn" prefWidth="75.0" text="Одобрить" />
                               <TableColumn fx:id="disagreeButtonColumn" prefWidth="75.0" text="Отклонить" />

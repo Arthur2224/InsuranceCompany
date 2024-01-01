@@ -6,53 +6,45 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class HelloController {
 
     @FXML
-    public TextField PhoneTextField;
+    private TextField phoneTextField;
     @FXML
-    public TextField Name;
+    private TextField nameField;
     @FXML
-    public TextField Surname;
+    private TextField surnameField;
     @FXML
-    public TextField LastName;
+    private TextField lastNameField;
     @FXML
-    public DatePicker Calendar;
+    private DatePicker calendarPicker;
 
     @FXML
-    public TextField email;
+    private TextField emailField;
     @FXML
-    public PasswordField Password;
+    private PasswordField passwordField;
     @FXML
-    public PasswordField Password1;
+    private PasswordField confirmPasswordField;
     @FXML
-    public TextField EmployeeCode;
+    private TextField employeeCodeField;
 
     @FXML
-    public Button SignUp;
+    private Button signUpButton;
     @FXML
-    public GridPane GridPanel;
-
-
-    @FXML
-    public Label thinkaboutcode;
-
+    private GridPane gridPanel;
 
     @FXML
-    protected void ClearTextFields() {
-        for (Node node : GridPanel.getChildren()) {
+    private Label tipOnMainPage;
+
+    @FXML
+    protected void clearTextFields() {
+        for (Node node : gridPanel.getChildren()) {
             if (node instanceof TextInputControl || node instanceof DatePicker) {
                 if (node instanceof TextInputControl) {
                     ((TextInputControl) node).clear();
@@ -60,50 +52,54 @@ public class HelloController {
                     ((DatePicker) node).setValue(null);
                 }
             }
-        };}
-        @FXML
-        protected  void SwitchToSignUpScene() {
-            try {
-                // Load the new scene
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
-                Parent root = loader.load();
-
-                // Create the stage and set the new scene
-                Stage stage = (Stage) SignUp.getScene().getWindow();
-                Scene scene = new Scene(root,1280,720);
-                stage.setResizable(false);
-                stage.setTitle("UnionInsurance");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }
-        @FXML protected void UpTip(){
-        thinkaboutcode.setOpacity(1);
-        }
-        @FXML
-        protected void DownTip(){
-        thinkaboutcode.setOpacity(0);
-        }
-        @FXML
-        protected void TryLogIn(){
-            java.time.LocalDate selectedDate = Calendar.getValue();
-            if(Objects.equals(Password.getText(), Password1.getText())&&!Password.getText().isEmpty()){
-                DataBaseConnectionVerification DBConVer=new DataBaseConnectionVerification();
-                if(EmployeeCode.getText().isEmpty()) DBConVer.LogInUser(Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText());
-                else DBConVer.LogInUser(new Stage(),Name.getText(),Surname.getText(),LastName.getText(),PhoneTextField.getText(),selectedDate,email.getText(),Password.getText(),EmployeeCode.getText());
-            }
-            else{
-                Alert alert=new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Поля для пароля не совпадают!");
-                alert.show();
-            }
-        }
-
-
-
-
-    ;
     }
+
+    @FXML
+    protected void switchToSignUpScene() {
+        try {
+            // Load the new scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+            Parent root = loader.load();
+
+            // Create the stage and set the new scene
+            Stage stage = (Stage) signUpButton.getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            stage.setResizable(false);
+            stage.setTitle("UnionInsurance");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void upTip() {
+        tipOnMainPage.setOpacity(1);
+    }
+
+    @FXML
+    protected void downTip() {
+        tipOnMainPage.setOpacity(0);
+    }
+
+    @FXML
+    protected void tryLogIn() {
+        java.time.LocalDate selectedDate = calendarPicker.getValue();
+        DataBaseConnectionVerification dbConVerifier = new DataBaseConnectionVerification();
+        if (Objects.equals(passwordField.getText(), confirmPasswordField.getText()) && !passwordField.getText().isEmpty()) {
+            if (employeeCodeField.getText().isEmpty()) {
+                dbConVerifier.LogInUser(nameField.getText(), surnameField.getText(), lastNameField.getText(),
+                        phoneTextField.getText(), selectedDate, emailField.getText(), passwordField.getText());
+            } else {
+                dbConVerifier.LogInUser(new Stage(), nameField.getText(), surnameField.getText(), lastNameField.getText(),
+                        phoneTextField.getText(), selectedDate, emailField.getText(), passwordField.getText(), employeeCodeField.getText());
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Поля для пароля не совпадают!");
+            alert.show();
+        }
+    }
+}

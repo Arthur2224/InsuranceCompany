@@ -22,17 +22,17 @@ import java.util.ResourceBundle;
 import static java.lang.Integer.parseInt;
 
 public class MainMenuController implements Initializable{
-    DataBaseConnectionVerification DB= new DataBaseConnectionVerification();
-    public static int selectedContractId;
+    private DataBaseConnectionVerification DB = new DataBaseConnectionVerification();
+    private  int selectedContractId;
     private boolean employee;
     @FXML
     private Button exitButton;
     @FXML
-    public Label TipForterm_auto;
+    private Label TipForterm_auto;
     @FXML
-    public Label TipForterm_life;
+    private Label TipForterm_life;
     @FXML
-    public Label TipForterm_house;
+    private Label TipForterm_house;
     @FXML
     private Label Description_auto;
     @FXML
@@ -47,35 +47,40 @@ public class MainMenuController implements Initializable{
     private Label TipForCoverage_house;
 
     private Object[] TypeOfInsuranceDescrip;
-   @FXML
-    public TextField term_auto;
     @FXML
-    public TextField term_life;
+    private TextField term_auto;
     @FXML
-    public TextField term_house;
+    private TextField term_life;
     @FXML
-    public TextField coverage_auto;
+    private TextField term_house;
     @FXML
-    public TextField coverage_life;
+    private TextField coverage_auto;
     @FXML
-    public TextField coverage_house;
+    private TextField coverage_life;
     @FXML
-    public Tab autoTab;
+    private TextField coverage_house;
     @FXML
-    public  Tab lifeTab;
-    @FXML   Tab houseTab;
+    private Tab autoTab;
+    @FXML
+    private Tab lifeTab;
+    @FXML
+    private Tab houseTab;
 
-    public  int base_price;
-    public  int min_duration;
-    public  int max_duration;
-    public  int min_coverage;
-    public  int max_coverage;
-    public Label totalPrice_auto;
-    public Label totalPrice_life;
-    public Label totalPrice_house;
-    public  int  coverageInt;
-    public  int termInt;
+    private int base_price;
+    private int min_duration;
+    private int max_duration;
+    private int min_coverage;
+    private int max_coverage;
+    @FXML
+    private Label totalPrice_auto;
+    @FXML
+    private Label totalPrice_life;
+    @FXML
+    private Label totalPrice_house;
+    private int coverageInt;
+    private int termInt;
     private Tab currentTab;
+
 
     @FXML
     private TableColumn<Contracts, Integer> id;
@@ -226,7 +231,7 @@ public class MainMenuController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        employee=DB.employee;
+        employee=DB.isEmployee();
         if(employee){
             autoTab.setDisable(true);
             lifeTab.setDisable(true);
@@ -342,7 +347,7 @@ public class MainMenuController implements Initializable{
 
 
     }
-    public static int getSelectedId(){
+    public  int getSelectedId(){
         return selectedContractId;
     }
 }
