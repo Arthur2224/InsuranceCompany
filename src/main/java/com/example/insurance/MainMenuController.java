@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.controlsfx.property.BeanPropertyUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -46,7 +45,7 @@ public class MainMenuController implements Initializable{
     @FXML
     private Label TipForCoverage_house;
 
-    private Object[] TypeOfInsuranceDescrip;
+    private Object[] TypeOfInsuranceDescription;
     @FXML
     private TextField term_auto;
     @FXML
@@ -145,12 +144,12 @@ public class MainMenuController implements Initializable{
 
     @FXML
     protected void getDescriptonOfInsuranceType(int id){
-        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(id);
-        min_duration=(int)TypeOfInsuranceDescrip[2];
-        max_duration=(int)TypeOfInsuranceDescrip[3];
-        min_coverage=(int)TypeOfInsuranceDescrip[4];
-        max_coverage=(int)TypeOfInsuranceDescrip[5];
-        base_price=(int)TypeOfInsuranceDescrip[6];
+        TypeOfInsuranceDescription =DB.getDescriptionOfInsuranceType(id);
+        min_duration=(int) TypeOfInsuranceDescription[2];
+        max_duration=(int) TypeOfInsuranceDescription[3];
+        min_coverage=(int) TypeOfInsuranceDescription[4];
+        max_coverage=(int) TypeOfInsuranceDescription[5];
+        base_price=(int) TypeOfInsuranceDescription[6];
     }
     private Node findElementByName(String name, Class<?> elementType) {
         try {
@@ -240,21 +239,21 @@ public class MainMenuController implements Initializable{
         }
         Label label =  (Label) findElementByName("Description_" + "auto",Label.class);
 
-        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(1);
+        TypeOfInsuranceDescription =DB.getDescriptionOfInsuranceType(1);
         if (label!=null) {
-            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+            label.setText(String.valueOf( TypeOfInsuranceDescription[1]));
 
         }
         label =  (Label) findElementByName("Description_" + "life",Label.class);;
-        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(2);
+        TypeOfInsuranceDescription =DB.getDescriptionOfInsuranceType(2);
         if (label!=null) {
-            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+            label.setText(String.valueOf( TypeOfInsuranceDescription[1]));
 
         }
          label =  (Label) findElementByName("Description_" + "house",Label.class);;
-        TypeOfInsuranceDescrip =DB.getDescriptionOfInsuranceType(3);
+        TypeOfInsuranceDescription =DB.getDescriptionOfInsuranceType(3);
         if (label!=null) {
-            label.setText(String.valueOf( TypeOfInsuranceDescrip[1]));
+            label.setText(String.valueOf( TypeOfInsuranceDescription[1]));
 
         }
 
